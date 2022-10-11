@@ -5,8 +5,10 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 # The different screens
 class MainWindow(Screen):
-    pass
+    deck = ["1♠","2♠","3♠","4♠","5♠","6♠","7♠","8♠","9♠","10♠","J♠","Q♠","K♠","1♥","2♥","3♥","4♥","5♥","6♥","7♥","8♥","9♥","10♥","J♥","Q♥","K♥","1♣","2♣","3♣","4♣","5♣","6♣","7♣","8♣","9♣","10♣","J♣","Q♣","K♣","1♦","2♦","3♦","4♦","5♦","6♦","7♦","8♦","9♦","10♦","J♦","Q♦","K♦"]
     
+    def show_deck(self):
+        self.ids.card_table.text = str(self.deck)
     
 
 class WindowTwo(Screen):

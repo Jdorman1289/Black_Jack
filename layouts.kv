@@ -37,6 +37,42 @@ WindowManager:
                 pos: self.pos
                 size: self.size
                 source: "wood-wallpaper.jpg"
+        
+        ScrollView:
+            Label:
+                id: card_table
+
+
+        Button:
+            text: "Deal"
+            bold: True
+            size_hint_x: None
+            width: 200
+            size_hint_y: None
+            height: 100
+            background_color: "#00FFCE"
+            on_release: root.show_deck()
+            pos_hint: {"bottom": .98, "left": 1}
+        
+        Button:
+            text: "Hit"
+            bold: True
+            size_hint_x: None
+            width: 200
+            size_hint_y: None
+            height: 100
+            background_color: "#00FFCE"
+            pos_hint: {"bottom": .98, "right": .70}
+
+        Button:
+            text: "Stay"
+            bold: True
+            size_hint_x: None
+            width: 200
+            size_hint_y: None
+            height: 100
+            background_color: "#00FFCE"
+            pos_hint: {"bottom": .98, "right": 1}
 
 
 

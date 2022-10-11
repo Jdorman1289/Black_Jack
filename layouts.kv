@@ -21,13 +21,29 @@
 
 ################################### All Windows #####################################
 
-#WindowManager:
-#    MainWindow:
-#    WindowTwo:
+WindowManager:
+    MainWindow:
+    WindowTwo:
 
 #################################### Main Window Layout #############################
-#<MainWindow>
-#    name: "main_window"
+<MainWindow>
+    name: "main_window"
+
+    FloatLayout:
+    cols: 1
+    size: root.width, root.height
+
+    canvas:
+        Color:
+            rgb: (.14, .14, .14)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+
+
+
 
 
 ################################ Window Two Layout #################################

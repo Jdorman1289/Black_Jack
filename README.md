@@ -1,6 +1,6 @@
-# app  
-A simple   
+# Black Jack app   
+A simple card game    
 
 The cards were created/distributed by MrEliptik (www.victormeunier.com)  
-thanks to   
-thanks to  
+Background image by Michael Schwarzenberger from Pixabay  
+

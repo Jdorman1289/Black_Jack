@@ -15,7 +15,7 @@ class WindowTwo(Screen):
 class WindowManager(ScreenManager):
     pass
 
-kv = Builder.load_file('path to kv')
+kv = Builder.load_file('layouts.kv')
 
 
 

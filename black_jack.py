@@ -77,7 +77,7 @@ class GameScreen(Screen):
             self.reset_game()
         else:
             print("Next Turn")
-            self.reset_game()
+ 
 
    
     def reset_game(self):
@@ -89,6 +89,8 @@ class GameScreen(Screen):
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
+
+        random.shuffle(keys)
 
 
 

@@ -26,19 +26,24 @@ WindowManager:
             orientation: "horizontal"
 
             MDRaisedButton:
+                id: deal_button
                 text: "Deal"
                 disabled: False
                 on_release: root.deal_cards()
 
                     
             MDRaisedButton:
+                id: hit_button
                 text: "Hit"
                 disabled: True
             
             MDRaisedButton:
+                id: stay_button
                 text: "Stay"
                 disabled: True
             
+
+                
             Image:
                 id: card_one
                 allow_stretch: True

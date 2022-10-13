@@ -14,11 +14,28 @@ class GameScreen(Screen):
         keys = list(deck.keys())
         random.shuffle(keys)
 
-        
+        # players hand
+        player = []
+        player.append(deck[keys[0]][1])
+        player.append(deck[keys[5]][1])
+  
+
+        # show players draw
         self.ids.card_one.source = deck[keys[0]][0]
         self.ids.card_two.source = deck[keys[5]][0]
         self.ids.card_one.height = "180dp"
         self.ids.card_two.height = "180dp"
+
+        # dealers hand
+        dealer = []
+        dealer.append(deck[keys[1]][1]) 
+        dealer.append(deck[keys[6]][1])
+
+        self.ids.deal_button.disabled = True
+        self.ids.hit_button.disabled = False
+        self.ids.stay_button.disabled = False
+
+        return player, dealer
 
     
 

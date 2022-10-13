@@ -17,19 +17,19 @@ class GameScreen(Screen):
         # players hand
         player = []
         player.append(deck[keys[0]][1])
-        player.append(deck[keys[5]][1])
+        player.append(deck[keys[1]][1])
   
 
         # show players cards
         self.ids.card_one.source = deck[keys[0]][0]
-        self.ids.card_two.source = deck[keys[5]][0]
+        self.ids.card_two.source = deck[keys[1]][0]
         self.ids.card_one.height = "180dp"
         self.ids.card_two.height = "180dp"
 
         # dealers hand
         dealer = []
-        dealer.append(deck[keys[1]][1]) 
-        dealer.append(deck[keys[6]][1])
+        dealer.append(deck[keys[2]][1]) 
+        dealer.append(deck[keys[3]][1])
 
         self.ids.deal_button.disabled = True
         self.ids.hit_button.disabled = False
@@ -39,8 +39,11 @@ class GameScreen(Screen):
         dealer = sum(dealer)
 
         self.check_score(player,dealer)
+    
+    
 
     def check_score(self, player, dealer):
+        
         if player == 21 and player == dealer:
             print("Its a tie!")
 

@@ -20,7 +20,7 @@ class GameScreen(Screen):
         player.append(deck[keys[5]][1])
   
 
-        # show players draw
+        # show players cards
         self.ids.card_one.source = deck[keys[0]][0]
         self.ids.card_two.source = deck[keys[5]][0]
         self.ids.card_one.height = "180dp"
@@ -35,9 +35,15 @@ class GameScreen(Screen):
         self.ids.hit_button.disabled = False
         self.ids.stay_button.disabled = False
 
-        return player, dealer
+        player = sum(player)
+        dealer = sum(dealer)
 
-    
+        self.check_score(player,dealer)
+
+    def check_score(self, player, dealer):
+        if player == 21 and player == dealer:
+            print("Its a tie!")
+
 
 
 

@@ -62,7 +62,8 @@ class GameScreen(Screen):
         
         self.check_score()
 
-  
+    def stay(self):
+        pass
    
     def check_score(self):
 

@@ -9,16 +9,18 @@ deck = {"1♠": ["black/Pikes_A_black.png", 11],"2♠": ["black/Pikes_2_black.pn
 keys = list(deck.keys())
 random.shuffle(keys)
 
+player = []
+dealer = []
 
 class GameScreen(Screen):
     
     def deal_cards(self):
         
         # players hand
-        player = []
+        
         player.append(deck[keys[0]][1])
         player.append(deck[keys[1]][1])
-  
+
 
         # show players cards
         self.ids.card_one.source = deck[keys[0]][0]
@@ -27,7 +29,7 @@ class GameScreen(Screen):
         self.ids.card_two.height = "180dp"
 
         # dealers hand
-        dealer = []
+        
         dealer.append(deck[keys[2]][1]) 
         dealer.append(deck[keys[3]][1])
 
@@ -38,6 +40,29 @@ class GameScreen(Screen):
   
         self.check_score(player,dealer)
     
+    def hit(self):
+
+        p_hit_count = len(player) + len(dealer)
+
+        if self.ids.card_three.source == "":
+            self.ids.card_three.source = deck[keys[p_hit_count + 1]][0]
+            self.ids.card_three.height = "180dp"
+        elif self.ids.card_four.source == "":
+            self.ids.card_four.source = deck[keys[p_hit_count + 1]][0]
+            self.ids.card_four.height = "180dp"
+        elif self.ids.card_five.source == "":
+            self.ids.card_five.source = deck[keys[p_hit_count + 1]][0]
+            self.ids.card_five.height = "180dp"
+        elif self.ids.card_six.source == "":
+            self.ids.card_six.source = deck[keys[p_hit_count + 1]][0]
+            self.ids.card_six.height = "180dp"
+
+        player.append(deck[keys[p_hit_count + 1]][1])
+        
+        
+        self.check_score(player,dealer)
+
+  
    
     def check_score(self, player, dealer):
 
@@ -49,12 +74,16 @@ class GameScreen(Screen):
             if values == 11 and player_score > 21:
                 player.remove(11)
                 player.append(1)
+                self.ids.player_kv.player = player
+
                 player_score = sum(player)
 
         for value in dealer:
             if value == 11 and dealer_score > 21:
                 dealer.remove(11)
                 dealer.append(1)
+                self.ids.dealer_kv.dealer = dealer
+
                 dealer_score = sum(dealer)
 
         lost = "The Dealer wins!" 
@@ -85,7 +114,9 @@ class GameScreen(Screen):
         self.ids.card_two.height = "0dp"
         self.ids.card_one.source = ""
         self.ids.card_two.source = ""
-
+        self.player = []
+        self.dealer = []
+  
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True

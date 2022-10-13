@@ -3,8 +3,7 @@ WindowManager:
 
 <GameScreen>
     name: "game_screen"
-
-
+    
     MDBoxLayout:
         orientation: "vertical"
         size: root.width, root.height
@@ -36,6 +35,7 @@ WindowManager:
                 id: hit_button
                 text: "Hit"
                 disabled: True
+                on_release: root.hit()
             
             MDRaisedButton:
                 id: stay_button
@@ -55,6 +55,42 @@ WindowManager:
 
             Image:
                 id: card_two
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 280
+                height: '0dp'
+                source: ""
+
+            Image:
+                id: card_three
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 280
+                height: '0dp'
+                source: ""
+
+            Image:
+                id: card_four
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 280
+                height: '0dp'
+                source: ""
+
+            Image:
+                id: card_five
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 280
+                height: '0dp'
+                source: ""
+
+            Image:
+                id: card_six
                 allow_stretch: True
                 keep_ratio: True
                 size_hint: None, None

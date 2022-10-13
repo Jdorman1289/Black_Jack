@@ -74,7 +74,6 @@ class GameScreen(Screen):
             if values == 11 and player_score > 21:
                 player.remove(11)
                 player.append(1)
-                self.ids.player_kv.player = player
 
                 player_score = sum(player)
 
@@ -82,7 +81,6 @@ class GameScreen(Screen):
             if value == 11 and dealer_score > 21:
                 dealer.remove(11)
                 dealer.append(1)
-                self.ids.dealer_kv.dealer = dealer
 
                 dealer_score = sum(dealer)
 

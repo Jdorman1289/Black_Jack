@@ -20,52 +20,18 @@ MDScreen:
             left_action_items: [['menu', lambda x: x]]
         
 
-        MDGridLayout:
-            cols: 2
-            size: root.width - 200, root.height -200
-            pos: 100, 100
-            
-            MDLabel:
-                size_hint: None, None
-
-            MDLabel:
-                size_hint: None, None
+        MDBoxLayout:
+            orientation: "horizontal"
+  
+            MDRaisedButton:
+                text: "Deal"
 
                     
-            MDCard:
-                orientation: "horizontal"
-                size_hint: None, None
-                size: "280dp", "280dp"
-
-
+            MDRaisedButton:
+                text: "Hit"
+                disabled: True
             
-            MDCard:
-                orientation: "horizontal"
-                size_hint: None, None
-                size: "280dp", "280dp"
-
-            MDGridLayout:
-                cols: 3
-            
-                MDLabel:
-                    size_hint: None, None
-
-                MDLabel:
-                    size_hint: None, None
-    
-                MDLabel:
-                    size_hint: None, None
-
-
-                
-                MDRaisedButton:
-                    text: "Deal"
-
-                        
-                MDRaisedButton:
-                    text: "Hit"
-
-                
-                MDRaisedButton:
-                    text: "Stay"
+            MDRaisedButton:
+                text: "Stay"
+                disabled: True
 

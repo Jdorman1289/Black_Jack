@@ -38,7 +38,7 @@ class GameScreen(Screen):
         self.ids.stay_button.disabled = False
 
   
-        self.check_score(player,dealer)
+        self.check_score()
     
     def hit(self):
 
@@ -60,11 +60,11 @@ class GameScreen(Screen):
         player.append(deck[keys[p_hit_count + 1]][1])
         
         
-        self.check_score(player,dealer)
+        self.check_score()
 
   
    
-    def check_score(self, player, dealer):
+    def check_score(self):
 
         player_score = sum(player)
         dealer_score = sum(dealer)
@@ -110,18 +110,23 @@ class GameScreen(Screen):
     def reset_game(self):
         self.ids.card_one.height = "0dp"
         self.ids.card_two.height = "0dp"
+        self.ids.card_three.height = "0dp"
+        self.ids.card_four.height = "0dp"
+        self.ids.card_five.height = "0dp"
+        self.ids.card_six.height = "0dp"
+        self.ids.card_one.source = ""
+        self.ids.card_two.source = ""
         self.ids.card_three.source = ""
         self.ids.card_four.source = ""
         self.ids.card_five.source = ""
         self.ids.card_six.source = ""
-        self.player = []
-        self.dealer = []
+        player.clear()
+        dealer.clear()
+        random.shuffle(keys)
   
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
-
-        random.shuffle(keys)
 
 
 

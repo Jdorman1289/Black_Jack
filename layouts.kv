@@ -1,18 +1,20 @@
-MDScreen:
+WindowManager:
+    GameScreen:
 
-    size: root.width, root.height
-
-    canvas.before:
-        Rectangle:
-            pos: self.pos
-            size: self.size
-            source: 'poker-chips-6784532.jpg'
+<GameScreen>
+    name: "game_screen"
 
 
-
-    MDGridLayout:
-        cols: 1
+    MDBoxLayout:
+        orientation: "vertical"
         size: root.width, root.height
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'poker-chips-6784532.jpg'
+
 
         MDTopAppBar:
             title: "BlackJack"
@@ -22,9 +24,10 @@ MDScreen:
 
         MDBoxLayout:
             orientation: "horizontal"
-  
+
             MDRaisedButton:
                 text: "Deal"
+                on_release: app.deal_cards()
 
                     
             MDRaisedButton:
@@ -34,4 +37,21 @@ MDScreen:
             MDRaisedButton:
                 text: "Stay"
                 disabled: True
+            
+            Image:
+                id: card_one
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 280
+                height: '0dp'
+                source: ""
 
+            Image:
+                id: card_two
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 280
+                height: '0dp'
+                source: ""

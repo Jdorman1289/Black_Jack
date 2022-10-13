@@ -110,8 +110,10 @@ class GameScreen(Screen):
     def reset_game(self):
         self.ids.card_one.height = "0dp"
         self.ids.card_two.height = "0dp"
-        self.ids.card_one.source = ""
-        self.ids.card_two.source = ""
+        self.ids.card_three.source = ""
+        self.ids.card_four.source = ""
+        self.ids.card_five.source = ""
+        self.ids.card_six.source = ""
         self.player = []
         self.dealer = []
   

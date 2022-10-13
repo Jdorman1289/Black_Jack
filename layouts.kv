@@ -1,86 +1,69 @@
-################################### All Popup Pages #####################################
+MDScreen:
 
+    size: root.width, root.height
 
-#<about_page@Popup>
-#    auto_dismiss: True
-#    title: "About"
-#    size_hint: 0.6, 0.6
-#    pos_hint: {"x": 0.2, "top": 0.9}
-#
-#    ScrollView:
-#        Label:
-#            text: "Created by Jesse Dorman.\n\n\nFor updates you can go here: https://github.com/Jdorman1289/wx_app/releases \n\nTo donate to the developer you can go here: https://ko-fi.com/jessecreates \n\n\nEnjoy!"
-#
-#            size_hint_y: None
-#            text_size: self.width, None
-#            height: self.texture_size[1]
-#            color: "#00FFCE"   
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'poker-chips-6784532.jpg'
 
 
 
-
-################################### All Windows #####################################
-
-WindowManager:
-    MainWindow:
-    WindowTwo:
-
-#################################### Main Window Layout #############################
-<MainWindow>
-    name: "main_window"
-
-    FloatLayout:
+    MDGridLayout:
+        cols: 1
         size: root.width, root.height
 
-        canvas:
-            Rectangle:
-                pos: self.pos
-                size: self.size
-                source: "wood-wallpaper.jpg"
+        MDTopAppBar:
+            title: "BlackJack"
+            pos_hint: {'top': 1}
+            left_action_items: [['menu', lambda x: x]]
         
-        ScrollView:
-            Label:
-                id: card_table
+
+        MDGridLayout:
+            cols: 2
+            
+            MDLabel:
+                size_hint: None, None
+
+            MDLabel:
+                size_hint: None, None
+
+                    
+            MDCard:
+                orientation: "horizontal"
+                size_hint: None, None
+                size: "280dp", "280dp"
 
 
-        Button:
-            text: "Deal"
-            bold: True
-            size_hint_x: None
-            width: 200
-            size_hint_y: None
-            height: 100
-            background_color: "#00FFCE"
-            on_release: root.show_deck()
-            pos_hint: {"bottom": .98, "left": 1}
-        
-        Button:
-            text: "Hit"
-            bold: True
-            size_hint_x: None
-            width: 200
-            size_hint_y: None
-            height: 100
-            background_color: "#00FFCE"
-            pos_hint: {"bottom": .98, "right": .70}
+            
+            MDCard:
+                orientation: "horizontal"
+                size_hint: None, None
+                size: "280dp", "280dp"
 
-        Button:
-            text: "Stay"
-            bold: True
-            size_hint_x: None
-            width: 200
-            size_hint_y: None
-            height: 100
-            background_color: "#00FFCE"
-            pos_hint: {"bottom": .98, "right": 1}
+            MDGridLayout:
+                cols: 3
+            
+                MDLabel:
+                    size_hint: None, None
+
+                MDLabel:
+                    size_hint: None, None
+    
+                MDLabel:
+                    size_hint: None, None
 
 
+                
+                MDRaisedButton:
+                    text: "Deal"
 
+                        
+                MDRaisedButton:
+                    text: "Hit"
 
-
-
-################################ Window Two Layout #################################
-#<WindowTwo>
-#    name: "window_two"
-
+                
+                MDRaisedButton:
+                    text: "Stay"
 

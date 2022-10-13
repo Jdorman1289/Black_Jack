@@ -38,13 +38,13 @@ class GameScreen(Screen):
   
         self.check_score(player,dealer)
     
-    
-
+   
     def check_score(self, player, dealer):
 
         player_score = sum(player)
         dealer_score = sum(dealer)
 
+        # Logic for Ace card values
         for values in player:
             if values == 11 and player_score > 21:
                 player.remove(11)
@@ -57,10 +57,38 @@ class GameScreen(Screen):
                 dealer.append(1)
                 dealer_score = sum(dealer)
 
-        
-        # if player_score == 21 and player_score == dealer_score:
-        #     print("Its a tie!")
+        lost = "The Dealer wins!" 
+        won = "You WIN!"
 
+        if player_score == 21 and dealer_score == 21:
+            print("Its a tie!")
+            self.reset_game()
+        elif player_score == 21 and dealer_score != 21:
+            print("You WIN!")
+            self.reset_game()
+        elif player_score != 21 and dealer_score == 21:
+            print(lost)
+            self.reset_game()
+        elif player_score > 21 and dealer_score < 21:
+            print("The Dealer wins!")
+            self.reset_game()
+        elif player_score < 21 and dealer_score > 21:
+            print(won)
+            self.reset_game()
+        else:
+            print("Next Turn")
+            self.reset_game()
+
+   
+    def reset_game(self):
+        self.ids.card_one.height = "0dp"
+        self.ids.card_two.height = "0dp"
+        self.ids.card_one.source = ""
+        self.ids.card_two.source = ""
+
+        self.ids.deal_button.disabled = False
+        self.ids.hit_button.disabled = True
+        self.ids.stay_button.disabled = True
 
 
 

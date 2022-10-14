@@ -78,6 +78,7 @@ class GameScreen(Screen):
             if dealer_check < 17:
                 print("The Dealer Hits")
                 dealer.append(deck[keys[d_hit_count + 1]][1])
+                self.check_score()
             elif dealer_check >= 17 or dealer_check > 21:
                 break
             

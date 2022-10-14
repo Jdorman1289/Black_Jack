@@ -76,13 +76,13 @@ class GameScreen(Screen):
 
         while dealer_check != 21:
             if dealer_check < 17:
-                print("The Dealer Hits")
+                self.ids.prompt.text = "The Dealer Hits"
                 dealer.append(deck[keys[d_hit_count + 1]][1])
                 dealer_check = sum(dealer)
                 self.check_score()
 
             elif dealer_check >= 17:
-                print("The Dealer Stays")
+                self.ids.prompt.text = "The Dealer Stays"
                 break
             
         
@@ -113,32 +113,32 @@ class GameScreen(Screen):
                 dealer_score = sum(dealer)
 
        
-        if len(stay_counter) > 2:
+        if len(stay_counter) >= 2:
             if player_score == dealer_score:
-                print(f"You tied with a score of {player_score}!")  
+                self.ids.prompt.text = f"You tied with a score of {player_score}!"  
                 self.reset_game()   
             elif player_score > dealer_score and player_score < 21:
-                print(f"You won with a score of {player_score}!")
+                self.ids.prompt.text = f"You won with a score of {player_score}!"
                 self.reset_game()
             elif player_score < dealer_score and dealer_score < 21:
-                print(f"The Dealer won with a score of {dealer_score}!")
+                self.ids.prompt.text = f"The Dealer won with a score of {dealer_score}!"
                 self.reset_game()
 
 
         if player_score == 21 and dealer_score == 21:
-            print("Its a tie!")
+            self.ids.prompt.text = "Its a tie at 21!"
             self.reset_game()
         elif player_score == 21 and dealer_score != 21:
-            print("You won with a 21!")
+            self.ids.prompt.text = "You won with a 21!"
             self.reset_game()
         elif player_score != 21 and dealer_score == 21:
-            print("The Dealer won with 21!")
+            self.ids.prompt.text = "The Dealer won with 21!"
             self.reset_game()
         elif player_score > 21 and dealer_score < 21:
-            print("You busted 21. The Dealer wins!")
+            self.ids.prompt.text = "You busted 21. The Dealer wins!"
             self.reset_game()
         elif player_score < 21 and dealer_score > 21:
-            print("You won. The Dealer busted 21!")
+            self.ids.prompt.text = "You won. The Dealer busted 21!"
             self.reset_game()
         else:
             print("")

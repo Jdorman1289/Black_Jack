@@ -21,6 +21,17 @@ WindowManager:
             left_action_items: [['menu', lambda x: x]]
         
 
+ 
+        MDLabel:
+            id: prompt
+            halign: "center"
+            text: ""
+            size_hint_y: None
+            text_size: self.width, None
+            height: self.texture_size[1]
+                       
+    
+
         MDBoxLayout:
             orientation: "horizontal"
 

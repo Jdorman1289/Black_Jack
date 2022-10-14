@@ -14,6 +14,9 @@ dealer = []
 
 stay_counter = []
 
+class SplashWindow(Screen):
+    pass
+
 class GameScreen(Screen):
     
     def deal_cards(self):
@@ -205,6 +208,7 @@ class GameScreen(Screen):
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
+
 
 
 

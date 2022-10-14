@@ -78,12 +78,15 @@ class GameScreen(Screen):
             if dealer_check < 17:
                 print("The Dealer Hits")
                 dealer.append(deck[keys[d_hit_count + 1]][1])
+                dealer_check = sum(dealer)
                 self.check_score()
-            elif dealer_check >= 17 or dealer_check > 21:
+
+            elif dealer_check >= 17:
+                print("The Dealer Stays")
                 break
             
         
-        print("The Dealer Stays")
+        
         stay_counter.append(1)
         self.check_score()
 
@@ -119,6 +122,7 @@ class GameScreen(Screen):
                 self.reset_game()
             elif player_score < dealer_score and dealer_score < 21:
                 print(f"The Dealer won with a score of {dealer_score}!")
+                self.reset_game()
             
 
 
@@ -138,7 +142,7 @@ class GameScreen(Screen):
             print("You won. The Dealer busted 21!")
             self.reset_game()
         else:
-            print("Next Turn")
+            print("")
 
  
 

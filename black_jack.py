@@ -35,6 +35,10 @@ class GameScreen(Screen):
         dealer.append(deck[keys[2]][1]) 
         dealer.append(deck[keys[3]][1])
 
+        # show dealer face up card
+        self.ids.dealer_card_two.source = deck[keys[2]][0]
+        self.ids.dealer_card_two.height = "180dp"
+
         self.ids.deal_button.disabled = True
         self.ids.hit_button.disabled = False
         self.ids.stay_button.disabled = False
@@ -77,7 +81,23 @@ class GameScreen(Screen):
         while dealer_check != 21:
             if dealer_check < 17:
                 self.ids.prompt.text = "The Dealer Hits"
+                
+                
+                if self.ids.dealer_card_three.source == "":
+                    self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_three.height = "180dp"
+                elif self.ids.dealer_card_four.source == "":
+                    self.ids.dealer_card_four.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_four.height = "180dp"
+                elif self.ids.dealer_card_five.source == "":
+                    self.ids.dealer_card_five.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_five.height = "180dp"
+                elif self.ids.dealer_card_six.source == "":
+                    self.ids.dealer_card_six.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_six.height = "180dp"
+
                 dealer.append(deck[keys[d_hit_count + 1]][1])
+
                 dealer_check = sum(dealer)
                 self.check_score()
 
@@ -140,13 +160,14 @@ class GameScreen(Screen):
         elif player_score < 21 and dealer_score > 21:
             self.ids.prompt.text = "You won. The Dealer busted 21!"
             self.reset_game()
-        else:
-            print("")
+
 
  
 
    
     def reset_game(self):
+
+        # clear player cards
         self.ids.card_one.height = "0dp"
         self.ids.card_two.height = "0dp"
         self.ids.card_three.height = "0dp"
@@ -159,6 +180,11 @@ class GameScreen(Screen):
         self.ids.card_four.source = ""
         self.ids.card_five.source = ""
         self.ids.card_six.source = ""
+
+        # clear dealers cards
+        self.ids.dealer_card.height = "0dp"
+        self.ids.dealer_card.source = ""
+
         player.clear()
         dealer.clear()
         stay_counter.clear()

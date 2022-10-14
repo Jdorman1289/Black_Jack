@@ -123,7 +123,6 @@ class GameScreen(Screen):
             elif player_score < dealer_score and dealer_score < 21:
                 print(f"The Dealer won with a score of {dealer_score}!")
                 self.reset_game()
-            
 
 
         if player_score == 21 and dealer_score == 21:

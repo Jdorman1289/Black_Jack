@@ -12,6 +12,8 @@ random.shuffle(keys)
 player = []
 dealer = []
 
+stay_counter = []
+
 class GameScreen(Screen):
     
     def deal_cards(self):
@@ -63,7 +65,7 @@ class GameScreen(Screen):
         self.check_score()
 
     def stay(self):
-
+        stay_counter.append(1)
         self.check_score()
         self.npc()
 
@@ -81,6 +83,7 @@ class GameScreen(Screen):
             
         
         print("The Dealer Stays")
+        stay_counter.append(1)
         self.check_score()
 
    
@@ -88,6 +91,7 @@ class GameScreen(Screen):
 
         player_score = sum(player)
         dealer_score = sum(dealer)
+
 
         # Logic for Ace card values
         for values in player:
@@ -103,6 +107,18 @@ class GameScreen(Screen):
                 dealer.append(1)
 
                 dealer_score = sum(dealer)
+
+       
+        if len(stay_counter) > 2:
+            if player_score == dealer_score:
+                print(f"You tied with a score of {player_score}!")  
+                self.reset_game()   
+            elif player_score > dealer_score and player_score < 21:
+                print(f"You won with a score of {player_score}!")
+                self.reset_game()
+            elif player_score < dealer_score and dealer_score < 21:
+                print(f"The Dealer won with a score of {dealer_score}!")
+            
 
 
         if player_score == 21 and dealer_score == 21:
@@ -141,6 +157,8 @@ class GameScreen(Screen):
         self.ids.card_six.source = ""
         player.clear()
         dealer.clear()
+        stay_counter.clear()
+
         random.shuffle(keys)
   
         self.ids.deal_button.disabled = False

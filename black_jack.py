@@ -182,8 +182,16 @@ class GameScreen(Screen):
         self.ids.card_six.source = ""
 
         # clear dealers cards
-        self.ids.dealer_card.height = "0dp"
-        self.ids.dealer_card.source = ""
+        self.ids.dealer_card_two.height = "0dp"
+        self.ids.dealer_card_two.source = ""
+        self.ids.dealer_card_three.height = "0dp"
+        self.ids.dealer_card_three.source = ""
+        self.ids.dealer_card_four.height = "0dp"
+        self.ids.dealer_card_four.source = ""
+        self.ids.dealer_card_five.height = "0dp"
+        self.ids.dealer_card_five.source = ""
+        self.ids.dealer_card_six.height = "0dp"
+        self.ids.dealer_card_six.source = ""
 
         player.clear()
         dealer.clear()

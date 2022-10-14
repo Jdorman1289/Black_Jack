@@ -65,6 +65,23 @@ class GameScreen(Screen):
     def stay(self):
 
         self.check_score()
+        self.npc()
+
+    def npc(self):
+
+        dealer_check = sum(dealer)
+        d_hit_count = len(player) + len(dealer)
+
+        while dealer_check != 21:
+            if dealer_check < 17:
+                print("The Dealer Hits")
+                dealer.append(deck[keys[d_hit_count + 1]][1])
+            elif dealer_check >= 17:
+                break
+        
+        print("The Dealer Stays")
+        self.check_score()
+
    
     def check_score(self):
 
@@ -106,6 +123,7 @@ class GameScreen(Screen):
             self.reset_game()
         else:
             print("Next Turn")
+
  
 
    

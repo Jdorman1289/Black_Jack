@@ -115,13 +115,13 @@ class GameScreen(Screen):
        
         if len(stay_counter) >= 2:
             if player_score == dealer_score:
-                self.ids.prompt.text = f"You tied with a score of {player_score}!"  
+                self.ids.prompt.text = "You tied!"  
                 self.reset_game()   
             elif player_score > dealer_score and player_score < 21:
-                self.ids.prompt.text = f"You won with a score of {player_score}!"
+                self.ids.prompt.text = "You won!"
                 self.reset_game()
             elif player_score < dealer_score and dealer_score < 21:
-                self.ids.prompt.text = f"The Dealer won with a score of {dealer_score}!"
+                self.ids.prompt.text = "The Dealer won!"
                 self.reset_game()
 
 

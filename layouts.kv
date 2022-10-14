@@ -30,8 +30,8 @@ WindowManager:
             text_size: self.width, None
             height: self.texture_size[1]
 
-        MDGridLayout:
-            cols: 6
+        MDBoxLayout:
+            orientation: "horizontal"
            
             Image:
                 id: dealer_card_down
@@ -39,7 +39,7 @@ WindowManager:
                 keep_ratio: True
                 size_hint: None, None
                 width: 280
-                height: '180dp'
+                height: '0dp'
                 source: ""
 
             Image:
@@ -86,9 +86,9 @@ WindowManager:
 
                        
     
-
         MDBoxLayout:
             orientation: "horizontal"
+
 
             MDRaisedButton:
                 id: deal_button

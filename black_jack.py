@@ -70,10 +70,11 @@ class GameScreen(Screen):
         dealer.append(deck[keys[3]][1])
 
         # show dealer cards
-        self.ids.dealer_card_two.source = deck[keys[2]][0]
-        self.ids.dealer_card_two.height = "180dp"
         self.ids.dealer_card_down.source = 'black/card_back.png'
         self.ids.dealer_card_down.height = "180dp"
+        self.ids.dealer_card_two.source = deck[keys[3]][0]
+        self.ids.dealer_card_two.height = "180dp"
+
 
         self.ids.deal_button.disabled = True
         self.ids.hit_button.disabled = False
@@ -199,6 +200,10 @@ class GameScreen(Screen):
 
    
     def reset_game(self):
+
+        # Show the dealers face down card
+        self.ids.dealer_card_down.source = deck[keys[2]][0]
+        self.ids.dealer_card_down.height = "180dp"
 
         player.clear()
         dealer.clear()

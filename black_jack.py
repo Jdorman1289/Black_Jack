@@ -22,6 +22,7 @@ class GameScreen(Screen):
     def deal_cards(self):
 
         # resets board for more than one match
+        self.ids.prompt.text = ""
         # clear player cards
         self.ids.card_one.height = "0dp"
         self.ids.card_two.height = "0dp"

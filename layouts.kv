@@ -14,25 +14,28 @@ WindowManager:
                 pos: self.pos
                 size: self.size
                 source: 'logo.png'
-       
-        MDBoxLayout:
-            orientation: "horizontal"
+        
+        
+        
+        MDFloatLayout: 
+            MDBoxLayout:
+                size_hint: None, None
+                size: 200, 100
+                center: root.center
 
 
-            MDRaisedButton:
-                id: start_game
-                text: "Play Game"
-                pos_hint: {"top": .5, "left": .5}
-                on_release: 
-                    app.root.current = "game_screen" 
-                    root.manager.transition.direction = "up"
+                MDRaisedButton:
+                    id: start_game
+                    text: "Play Game"
+                    on_release: 
+                        app.root.current = "game_screen" 
+                        root.manager.transition.direction = "up"
 
-                    
-            MDRaisedButton:
-                id: exit_button
-                text: "Exit Game"
-                pos_hint: {"top": .5, "right": .5}
-                on_release: root.exit()
+                        
+                MDRaisedButton:
+                    id: exit_button
+                    text: "Exit Game"
+                    on_release: root.exit()
 
 <GameScreen>
     name: "game_screen"

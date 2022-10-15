@@ -78,41 +78,40 @@ class GameScreen(Screen):
         self.check_score()
         self.npc()
 
-    def npc_runner(self):
-        dealer_check = sum(dealer)
-
-        if dealer_check < 17:
-            self.ids.prompt.text = "The Dealer Hits"
-            self.npc()
-        elif dealer_check >= 17:
-            self.ids.prompt.text = "The Dealer Stays"
-            stay_counter.append(1)
-            self.check_score()
 
     def npc(self):
 
+        dealer_check = sum(dealer)
         d_hit_count = len(player) + len(dealer)
 
+        while dealer_check != 21:
+            if dealer_check < 17:
+                if self.ids.dealer_card_three.source == "":
+                    self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_three.height = "180dp"
+                elif self.ids.dealer_card_four.source == "":
+                    self.ids.dealer_card_four.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_four.height = "180dp"
+                elif self.ids.dealer_card_five.source == "":
+                    self.ids.dealer_card_five.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_five.height = "180dp"
+                elif self.ids.dealer_card_six.source == "":
+                    self.ids.dealer_card_six.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_six.height = "180dp"
 
-        if self.ids.dealer_card_three.source == "":
-            self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
-            self.ids.dealer_card_three.height = "180dp"
-            dealer.append(deck[keys[d_hit_count + 1]][1])
-        elif self.ids.dealer_card_four.source == "":
-            self.ids.dealer_card_four.source = deck[keys[d_hit_count + 1]][0]
-            self.ids.dealer_card_four.height = "180dp"
-            dealer.append(deck[keys[d_hit_count + 1]][1])
-        elif self.ids.dealer_card_five.source == "":
-            self.ids.dealer_card_five.source = deck[keys[d_hit_count + 1]][0]
-            self.ids.dealer_card_five.height = "180dp"
-            dealer.append(deck[keys[d_hit_count + 1]][1])
-        elif self.ids.dealer_card_six.source == "":
-            self.ids.dealer_card_six.source = deck[keys[d_hit_count + 1]][0]
-            self.ids.dealer_card_six.height = "180dp"
-            dealer.append(deck[keys[d_hit_count + 1]][1])
+                dealer.append(deck[keys[d_hit_count + 1]][1])
+
+                dealer_check = sum(dealer)
+                self.check_score()
+
+            elif dealer_check >= 17:
+                break
+            
         
         
+        stay_counter.append(1)
         self.check_score()
+
 
    
     def check_score(self):

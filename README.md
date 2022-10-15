@@ -2,6 +2,7 @@
 A simple card game    
 
 The cards were created/distributed by MrEliptik (www.victormeunier.com)  
-Image by <a href="https://pixabay.com/users/mariakray-23567841/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6784532">Maria</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6784532">Pixabay</a>  
+Background Image by <a href="https://pixabay.com/users/mariakray-23567841/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6784532">Maria</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=6784532">Pixabay</a>  
 
+Splash Screen Image by <a href="https://pixabay.com/users/peter-lomas-5966639/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2717426">Peter Lomas</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2717426">Pixabay</a>  
 

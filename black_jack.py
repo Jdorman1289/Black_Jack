@@ -180,37 +180,29 @@ class GameScreen(Screen):
         if len(stay_counter) == 2:
             if player_score == dealer_score:
                 self.ids.prompt.text = "You tied!" 
-                Factory.you_tie().open()
                 self.reset_game()   
             elif player_score > dealer_score and player_score < 21:
                 self.ids.prompt.text = "You won!"
-                Factory.you_win().open()
                 self.reset_game()
             elif player_score < dealer_score and dealer_score < 21:
                 self.ids.prompt.text = "The Dealer won!"
-                Factory.you_lose().open()
                 self.reset_game()
 
 
         if player_score == 21 and dealer_score == 21:
             self.ids.prompt.text = "Its a tie at 21!"
-            Factory.you_tie().open()
             self.reset_game()
         elif player_score == 21 and dealer_score != 21:
             self.ids.prompt.text = "You won with a 21!"
-            Factory.you_win().open()
             self.reset_game()
         elif player_score != 21 and dealer_score == 21:
             self.ids.prompt.text = "The Dealer won with 21!"
-            Factory.you_lose().open()
             self.reset_game()
         elif player_score > 21 and dealer_score < 21:
             self.ids.prompt.text = "You busted 21. The Dealer wins!"
-            Factory.you_lose().open()
             self.reset_game()
         elif player_score < 21 and dealer_score > 21:
             self.ids.prompt.text = "You won. The Dealer busted 21!"
-            Factory.you_win().open()
             self.reset_game()
 
 

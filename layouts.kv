@@ -1,7 +1,64 @@
+################################### All Popup Pages #####################################
+
+<you_win@Popup>
+    auto_dismiss: True
+    title: "Game Over"
+    size_hint: 0.3, 0.3
+    pos_hint: {"x": 0.4, "top": 0.8}
+
+
+    ScrollView:
+        MDLabel:
+            text: "YOU WON! ENJOY YOUR GREATNESS!"
+            bold: True
+            size_hint_y: None
+            text_size: self.width, None
+            height: self.texture_size[1]
+
+
+
+<you_lose@Popup>
+    auto_dismiss: True
+    title: "Game Over"
+    size_hint: 0.3, 0.3
+    pos_hint: {"x": 0.4, "top": 0.8}
+
+
+    ScrollView:
+        MDLabel:
+            text: "The Dealer Won! Maybe you'll win next time!"
+            bold: True
+            size_hint_y: None
+            text_size: self.width, None
+            height: self.texture_size[1]
+
+<you_tie@Popup>
+    auto_dismiss: True
+    title: "Game Over"
+    size_hint: 0.3, 0.3
+    pos_hint: {"x": 0.4, "top": 0.8}
+
+
+    ScrollView:
+        MDLabel:
+            text: "You Tied! Maybe you'll win next time!"
+            bold: True
+            size_hint_y: None
+            text_size: self.width, None
+            height: self.texture_size[1]
+
+
+
+
+
+################################### All Windows #####################################
+
 WindowManager:
     SplashWindow:
     GameScreen:
 
+
+################################### Splash Screen #####################################
 <SplashWindow>
     name: "splash_window"
 
@@ -36,6 +93,9 @@ WindowManager:
                     id: exit_button
                     text: "Exit Game"
                     on_release: root.exit()
+
+
+################################### Main Game Screen #####################################
 
 <GameScreen>
     name: "game_screen"

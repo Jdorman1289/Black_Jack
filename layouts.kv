@@ -66,59 +66,66 @@ WindowManager:
             text_size: self.width, None
             height: self.texture_size[1]
 
-        MDBoxLayout:
-            orientation: "horizontal"
+        ScrollView:
+            do_scroll_y: False
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: None
+                width: self.minimum_width
+                size_hint_y: None
+                height: self.minimum_height
            
-            Image:
-                id: dealer_card_down
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: dealer_card_down
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: dealer_card_two
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: dealer_card_two
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: dealer_card_three
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
-            Image:
-                id: dealer_card_four
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
-            Image:
-                id: dealer_card_five
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
-            Image:
-                id: dealer_card_six
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: dealer_card_three
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
+                Image:
+                    id: dealer_card_four
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
+                Image:
+                    id: dealer_card_five
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
+                Image:
+                    id: dealer_card_six
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
                        
     
@@ -145,58 +152,66 @@ WindowManager:
                 disabled: True
                 on_release: root.stay()
             
-
+        ScrollView:
+            do_scroll_y: False
+            
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: None
+                width: self.minimum_width
+                size_hint_y: None
+                height: self.minimum_height
                 
-            Image:
-                id: card_one
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: card_one
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: card_two
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: card_two
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: card_three
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: card_three
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: card_four
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: card_four
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: card_five
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: card_five
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""
 
-            Image:
-                id: card_six
-                allow_stretch: True
-                keep_ratio: True
-                size_hint: None, None
-                width: 280
-                height: '0dp'
-                source: ""
+                Image:
+                    id: card_six
+                    allow_stretch: True
+                    keep_ratio: True
+                    size_hint: None, None
+                    width: 280
+                    height: '0dp'
+                    source: ""

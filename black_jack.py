@@ -91,17 +91,23 @@ class GameScreen(Screen):
         if self.ids.card_three.source == "":
             self.ids.card_three.source = deck[keys[p_hit_count + 1]][0]
             self.ids.card_three.height = "150dp"
+            player.append(deck[keys[p_hit_count + 1]][1])
         elif self.ids.card_four.source == "":
             self.ids.card_four.source = deck[keys[p_hit_count + 1]][0]
             self.ids.card_four.height = "150dp"
+            player.append(deck[keys[p_hit_count + 1]][1])
         elif self.ids.card_five.source == "":
             self.ids.card_five.source = deck[keys[p_hit_count + 1]][0]
             self.ids.card_five.height = "150dp"
+            player.append(deck[keys[p_hit_count + 1]][1])
         elif self.ids.card_six.source == "":
             self.ids.card_six.source = deck[keys[p_hit_count + 1]][0]
             self.ids.card_six.height = "150dp"
+            player.append(deck[keys[p_hit_count + 1]][1])
+        else:
+            self.ids.hit_button.disabled = False
+            self.ids.prompt.text = "You can't draw more than 6 cards!"
 
-        player.append(deck[keys[p_hit_count + 1]][1])
         
         
         self.check_score()
@@ -131,6 +137,10 @@ class GameScreen(Screen):
                 elif self.ids.dealer_card_six.source == "":
                     self.ids.dealer_card_six.source = deck[keys[d_hit_count + 1]][0]
                     self.ids.dealer_card_six.height = "150dp"
+                else:
+                    break
+
+                    
 
                 dealer.append(deck[keys[d_hit_count + 1]][1])
 

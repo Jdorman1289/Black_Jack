@@ -102,7 +102,6 @@ class GameScreen(Screen):
                 dealer.append(deck[keys[d_hit_count + 1]][1])
 
                 dealer_check = sum(dealer)
-                self.check_score()
 
             elif dealer_check >= 17:
                 break
@@ -136,7 +135,7 @@ class GameScreen(Screen):
                 dealer_score = sum(dealer)
 
        
-        if len(stay_counter) >= 2:
+        if len(stay_counter) == 2:
             if player_score == dealer_score:
                 self.ids.prompt.text = "You tied!"  
                 self.reset_game()   

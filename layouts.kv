@@ -55,16 +55,8 @@ WindowManager:
             title: "BlackJack"
             pos_hint: {'top': 1}
             left_action_items: [['menu', lambda x: x]]
-        
 
- 
-        MDLabel:
-            id: prompt
-            halign: "center"
-            text: ""
-            size_hint_y: None
-            text_size: self.width, None
-            height: self.texture_size[1]
+
 
         ScrollView:
             do_scroll_y: False
@@ -127,34 +119,11 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                       
-    
-        MDBoxLayout:
-            orientation: "horizontal"
 
-
-            MDRaisedButton:
-                id: deal_button
-                text: "Deal"
-                disabled: False
-                on_release: root.deal_cards()
-
-                    
-            MDRaisedButton:
-                id: hit_button
-                text: "Hit"
-                disabled: True
-                on_release: root.hit()
-            
-            MDRaisedButton:
-                id: stay_button
-                text: "Stay"
-                disabled: True
-                on_release: root.stay()
             
         ScrollView:
             do_scroll_y: False
-            
+
             MDBoxLayout:
                 orientation: "horizontal"
                 size_hint_x: None
@@ -215,3 +184,34 @@ WindowManager:
                     width: 280
                     height: '0dp'
                     source: ""
+        
+        MDBoxLayout:
+            orientation: "horizontal"
+
+
+            MDRaisedButton:
+                id: deal_button
+                text: "Deal"
+                disabled: False
+                on_release: root.deal_cards()
+
+                    
+            MDRaisedButton:
+                id: hit_button
+                text: "Hit"
+                disabled: True
+                on_release: root.hit()
+            
+            MDRaisedButton:
+                id: stay_button
+                text: "Stay"
+                disabled: True
+                on_release: root.stay()
+            
+            MDLabel:
+                id: prompt
+                halign: "center"
+                text: ""
+                size_hint_y: None
+                text_size: self.width, None
+                height: self.texture_size[1]

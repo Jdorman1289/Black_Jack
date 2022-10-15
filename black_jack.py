@@ -61,8 +61,8 @@ class GameScreen(Screen):
         # show players cards
         self.ids.card_one.source = deck[keys[0]][0]
         self.ids.card_two.source = deck[keys[1]][0]
-        self.ids.card_one.height = "180dp"
-        self.ids.card_two.height = "180dp"
+        self.ids.card_one.height = "150dp"
+        self.ids.card_two.height = "150dp"
 
         # dealers hand
         
@@ -71,9 +71,9 @@ class GameScreen(Screen):
 
         # show dealer cards
         self.ids.dealer_card_down.source = 'black/card_back.png'
-        self.ids.dealer_card_down.height = "180dp"
+        self.ids.dealer_card_down.height = "150dp"
         self.ids.dealer_card_two.source = deck[keys[3]][0]
-        self.ids.dealer_card_two.height = "180dp"
+        self.ids.dealer_card_two.height = "150dp"
 
 
         self.ids.deal_button.disabled = True
@@ -89,16 +89,16 @@ class GameScreen(Screen):
 
         if self.ids.card_three.source == "":
             self.ids.card_three.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_three.height = "180dp"
+            self.ids.card_three.height = "150dp"
         elif self.ids.card_four.source == "":
             self.ids.card_four.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_four.height = "180dp"
+            self.ids.card_four.height = "150dp"
         elif self.ids.card_five.source == "":
             self.ids.card_five.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_five.height = "180dp"
+            self.ids.card_five.height = "150dp"
         elif self.ids.card_six.source == "":
             self.ids.card_six.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_six.height = "180dp"
+            self.ids.card_six.height = "150dp"
 
         player.append(deck[keys[p_hit_count + 1]][1])
         
@@ -120,16 +120,16 @@ class GameScreen(Screen):
             if dealer_check < 17:
                 if self.ids.dealer_card_three.source == "":
                     self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
-                    self.ids.dealer_card_three.height = "180dp"
+                    self.ids.dealer_card_three.height = "150dp"
                 elif self.ids.dealer_card_four.source == "":
                     self.ids.dealer_card_four.source = deck[keys[d_hit_count + 1]][0]
-                    self.ids.dealer_card_four.height = "180dp"
+                    self.ids.dealer_card_four.height = "150dp"
                 elif self.ids.dealer_card_five.source == "":
                     self.ids.dealer_card_five.source = deck[keys[d_hit_count + 1]][0]
-                    self.ids.dealer_card_five.height = "180dp"
+                    self.ids.dealer_card_five.height = "150dp"
                 elif self.ids.dealer_card_six.source == "":
                     self.ids.dealer_card_six.source = deck[keys[d_hit_count + 1]][0]
-                    self.ids.dealer_card_six.height = "180dp"
+                    self.ids.dealer_card_six.height = "150dp"
 
                 dealer.append(deck[keys[d_hit_count + 1]][1])
 
@@ -203,7 +203,7 @@ class GameScreen(Screen):
 
         # Show the dealers face down card
         self.ids.dealer_card_down.source = deck[keys[2]][0]
-        self.ids.dealer_card_down.height = "180dp"
+        self.ids.dealer_card_down.height = "150dp"
 
         player.clear()
         dealer.clear()

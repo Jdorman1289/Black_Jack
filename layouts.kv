@@ -267,6 +267,10 @@ WindowManager:
                 
                 OneLineIconListItem:
                     text: "Logout"
-                
+               
                     IconLeftWidget:
                         icon: "logout"
+               
+                        on_release: 
+                            app.root.current = "splash_window" 
+                            root.manager.transition.direction = "down"

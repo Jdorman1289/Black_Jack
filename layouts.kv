@@ -7,6 +7,7 @@
 WindowManager:
     SplashWindow:
     GameScreen:
+        NavBar:
 
 
 ################################### Splash Screen #####################################
@@ -75,7 +76,7 @@ WindowManager:
         MDTopAppBar:
             title: "BlackJack"
             pos_hint: {'top': 1}
-            left_action_items: [['menu', lambda x: x]]
+            left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
 
 
 
@@ -236,3 +237,6 @@ WindowManager:
                 size_hint_y: None
                 text_size: self.width, None
                 height: self.texture_size[1]
+    
+    MDNavigationDrawer:
+        id: nav_drawer

@@ -226,6 +226,8 @@ class GameScreen(Screen):
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
 
+class NavBar(Screen):
+    pass
 
 
 class WindowManager(ScreenManager):

@@ -240,3 +240,33 @@ WindowManager:
     
     MDNavigationDrawer:
         id: nav_drawer
+
+        orientation: "vertical"
+        radius: (0, 16, 16, 0)
+        elevation: 4
+        shadow_radius: 16, 16, 0, 0
+        width: "240dp"
+
+
+        ScrollView:
+            
+            MDList:
+                
+                OneLineIconListItem:
+                    text: "About"
+                
+                    IconLeftWidget:
+                        icon: "information"
+                        
+                OneLineIconListItem:
+                    text: "Thanks"
+                
+                    IconLeftWidget:
+                        icon: "cards-heart"
+                        
+                
+                OneLineIconListItem:
+                    text: "Logout"
+                
+                    IconLeftWidget:
+                        icon: "logout"

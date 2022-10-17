@@ -1,6 +1,7 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+import webbrowser
 import random
 
 
@@ -225,9 +226,14 @@ class GameScreen(Screen):
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
+        
+    def donate_button(self):
+        webbrowser.open('https://ko-fi.com/jessecreates', new = 2)
+		
 
 class NavBar(Screen):
-    pass
+	pass
+	
 
 
 class WindowManager(ScreenManager):

@@ -242,27 +242,31 @@ WindowManager:
         id: nav_drawer
 
         orientation: "vertical"
-        radius: (0, 16, 16, 0)
-        elevation: 4
-        shadow_radius: 16, 16, 0, 0
-        width: "240dp"
-
-
-        ScrollView:
+        
+        MDList:
+        	TwoLineListItem:
+        		text: "Black Jack"
+        		secondary_text: "A simple card game"
+        	
+        	
+        
+        MDScrollView:
             
             MDList:
                 
                 OneLineIconListItem:
-                    text: "About"
-                
+                	
+                	text: "About"
+  
                     IconLeftWidget:
                         icon: "information"
                         
                 OneLineIconListItem:
-                    text: "Thanks"
+                    text: "Say thanks"
                 
                     IconLeftWidget:
                         icon: "cards-heart"
+                        on_release: root.donate_button()
                         
                 
                 OneLineIconListItem:

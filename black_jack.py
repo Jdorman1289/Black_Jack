@@ -1,7 +1,6 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.factory import Factory
 import random
 
 
@@ -16,7 +15,9 @@ dealer = []
 stay_counter = []
 
 class SplashWindow(Screen):
-    pass
+    
+    def close(self):
+    	exit()
 
 class GameScreen(Screen):
     
@@ -235,7 +236,7 @@ class WindowManager(ScreenManager):
 class BlackJack(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Teal"
+        self.theme_cls.primary_palette = "DeepPurple"
         return Builder.load_file('layouts.kv')
         
 

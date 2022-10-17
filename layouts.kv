@@ -21,29 +21,38 @@ WindowManager:
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'logo.png'
+                source: 'bg_classes.jpg'
         
         
         
-        MDFloatLayout: 
-            MDBoxLayout:
-                size_hint: None, None
-                size: 200, 100
-                center: root.center
+        MDGridLayout:
+        	cols: 3
+        	
+            Label:
+        	Label:
+        	Label:
+        	Label:
 
-
-                MDRaisedButton:
-                    id: start_game
-                    text: "Play Game"
-                    on_release: 
-                        app.root.current = "game_screen" 
-                        root.manager.transition.direction = "up"
+            MDRaisedButton:
+                id: start_game
+                text: "Play Game"
+                on_release: 
+                    app.root.current = "game_screen" 
+                    root.manager.transition.direction = "up"
 
                         
-                MDRaisedButton:
-                    id: exit_button
-                    text: "Exit Game"
-                    on_release: root.exit()
+            MDRaisedButton:
+                id: exit_button
+                text: "Exit Game"
+                on_release: root.close()
+            
+            Label:
+            Label:
+            Label:
+            Label:
+            Label:
+            Label:
+  
 
 
 ################################### Main Game Screen #####################################
@@ -56,10 +65,11 @@ WindowManager:
         size: root.width, root.height
 
         canvas.before:
+            Color:
+            	rgb: (.2078, .3961, .302)
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'poker-chips-6784532.jpg'
 
 
         MDTopAppBar:

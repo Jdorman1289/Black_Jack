@@ -1,5 +1,5 @@
-################################### All Popup Pages #####################################
-
+################################### Custom classes #####################################
+<MImage@MagicBehavior+Image>
 
 
 ################################### All Windows #####################################
@@ -24,14 +24,17 @@ WindowManager:
                 size: self.size
                 source: 'bg_classes.jpg'
         
-        
-        
+        #MDLabel:
+        	#md_bg_color: app.theme_cls.primary_color
+        	#halign: "center"
+        	#size_hint: .7, .3
+        	
         MDGridLayout:
         	cols: 3
         	
-            Label:
         	Label:
-        	Label:
+            Label:        		
+        	Label:      		        		
         	Label:
 
             MDRaisedButton:
@@ -90,16 +93,17 @@ WindowManager:
                 size_hint_y: None
                 height: self.minimum_height
            
-                Image:
+                MImage:
                     id: dealer_card_down
                     allow_stretch: True
                     keep_ratio: True
                     size_hint: None, None
                     width: 280
+                    magic_speed: 1
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: dealer_card_two
                     allow_stretch: True
                     keep_ratio: True
@@ -108,7 +112,7 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: dealer_card_three
                     allow_stretch: True
                     keep_ratio: True
@@ -116,7 +120,7 @@ WindowManager:
                     width: 280
                     height: '0dp'
                     source: ""
-                Image:
+                MImage:
                     id: dealer_card_four
                     allow_stretch: True
                     keep_ratio: True
@@ -124,7 +128,7 @@ WindowManager:
                     width: 280
                     height: '0dp'
                     source: ""
-                Image:
+                MImage:
                     id: dealer_card_five
                     allow_stretch: True
                     keep_ratio: True
@@ -132,7 +136,7 @@ WindowManager:
                     width: 280
                     height: '0dp'
                     source: ""
-                Image:
+                MImage:
                     id: dealer_card_six
                     allow_stretch: True
                     keep_ratio: True
@@ -153,7 +157,7 @@ WindowManager:
                 size_hint_y: None
                 height: self.minimum_height
                 
-                Image:
+                MImage:
                     id: card_one
                     allow_stretch: True
                     keep_ratio: True
@@ -162,7 +166,7 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: card_two
                     allow_stretch: True
                     keep_ratio: True
@@ -171,7 +175,7 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: card_three
                     allow_stretch: True
                     keep_ratio: True
@@ -180,7 +184,7 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: card_four
                     allow_stretch: True
                     keep_ratio: True
@@ -189,7 +193,7 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: card_five
                     allow_stretch: True
                     keep_ratio: True
@@ -198,7 +202,7 @@ WindowManager:
                     height: '0dp'
                     source: ""
 
-                Image:
+                MImage:
                     id: card_six
                     allow_stretch: True
                     keep_ratio: True
@@ -270,11 +274,10 @@ WindowManager:
                         
                 
                 OneLineIconListItem:
-                    text: "Logout"
+                    text: "Close Game"
                
                     IconLeftWidget:
                         icon: "logout"
                
                         on_release: 
-                            app.root.current = "splash_window" 
-                            root.manager.transition.direction = "down"
+                            root.close_two()

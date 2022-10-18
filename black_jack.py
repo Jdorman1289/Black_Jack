@@ -76,7 +76,7 @@ class GameScreen(Screen):
         dealer.append(deck[keys[3]][1])
 
         # show dealer cards
-        self.ids.dealer_card_down.source = 'Playing-Cards/card-back1.png'
+        self.ids.dealer_card_down.source = 'Playing-Cards/card-back2.png'
         self.ids.dealer_card_down.height = "150dp"
         self.ids.dealer_card_two.source = deck[keys[3]][0]
         self.ids.dealer_card_two.height = "150dp"

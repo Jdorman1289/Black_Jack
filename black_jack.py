@@ -1,12 +1,11 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-#from kivy.core.window import Window
 import webbrowser
 import random
 
 
-#Window.size = 1280, 720 
+
 
 deck = {"1♠": ["Playing-Cards/card-spades-1.png", 11],"2♠": ["Playing-Cards/card-spades-2.png", 2],"3♠": ["Playing-Cards/card-spades-3.png", 3],"4♠": ["Playing-Cards/card-spades-4.png", 4],"5♠": ["Playing-Cards/card-spades-5.png", 5],"6♠": ["Playing-Cards/card-spades-6.png", 6],"7♠": ["Playing-Cards/card-spades-7.png", 7],"8♠": ["Playing-Cards/card-spades-8.png", 8],"9♠": ["Playing-Cards/card-spades-9.png", 9],"10♠": ["Playing-Cards/card-spades-10.png", 10],"J♠": ["Playing-Cards/card-spades-11.png", 10],"Q♠": ["Playing-Cards/card-spades-12.png", 10],"K♠": ["Playing-Cards/card-spades-13.png", 10],"1♥": ["Playing-Cards/card-hearts-1.png", 11],"2♥": ["Playing-Cards/card-hearts-2.png", 2],"3♥": ["Playing-Cards/card-hearts-3.png", 3],"4♥": ["Playing-Cards/card-hearts-4.png", 4],"5♥": ["Playing-Cards/card-hearts-5.png", 5],"6♥": ["Playing-Cards/card-hearts-6.png", 6],"7♥": ["Playing-Cards/card-hearts-7.png", 7],"8♥": ["Playing-Cards/card-hearts-8.png", 8],"9♥": ["Playing-Cards/card-hearts-9.png", 9],"10♥": ["Playing-Cards/card-hearts-10.png", 10],"J♥": ["Playing-Cards/card-hearts-11.png", 10],"Q♥": ["Playing-Cards/card-hearts-12.png", 10],"K♥": ["Playing-Cards/card-hearts-13.png", 10],"1♣": ["Playing-Cards/card-clubs-1.png", 11],"2♣": ["Playing-Cards/card-clubs-2.png", 2],"3♣": ["Playing-Cards/card-clubs-3.png", 3],"4♣": ["Playing-Cards/card-clubs-4.png", 4],"5♣": ["Playing-Cards/card-clubs-5.png", 5],"6♣": ["Playing-Cards/card-clubs-6.png", 6],"7♣": ["Playing-Cards/card-clubs-7.png", 7],"8♣": ["Playing-Cards/card-clubs-8.png", 8],"9♣": ["Playing-Cards/card-clubs-9.png", 9],"10♣": ["Playing-Cards/card-clubs-10.png", 10],"J♣": ["Playing-Cards/card-clubs-11.png", 10],"Q♣": ["Playing-Cards/card-clubs-12.png", 10],"K♣": ["Playing-Cards/card-clubs-13.png", 10],"1♦": ["Playing-Cards/card-diamonds-1.png", 11],"2♦": ["Playing-Cards/card-diamonds-2.png", 2],"3♦": ["Playing-Cards/card-diamonds-3.png", 3],"4♦": ["Playing-Cards/card-diamonds-4.png", 4],"5♦": ["Playing-Cards/card-diamonds-5.png", 5],"6♦": ["Playing-Cards/card-diamonds-6.png", 6],"7♦": ["Playing-Cards/card-diamonds-7.png", 7],"8♦": ["Playing-Cards/card-diamonds-8.png", 8],"9♦": ["Playing-Cards/card-diamonds-9.png", 9],"10♦": ["Playing-Cards/card-diamonds-10.png", 10],"J♦": ["Playing-Cards/card-diamonds-11.png", 10],"Q♦": ["Playing-Cards/card-diamonds-12.png", 10],"K♦": ["Playing-Cards/card-diamonds-13.png", 10]}
 

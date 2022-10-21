@@ -24,10 +24,7 @@ WindowManager:
                 size: self.size
                 source: 'bg_classes.jpg'
         
-        #MDLabel:
-        	#md_bg_color: app.theme_cls.primary_color
-        	#halign: "center"
-        	#size_hint: .7, .3
+       
         	
         MDGridLayout:
         	cols: 3
@@ -264,6 +261,7 @@ WindowManager:
   
                     IconLeftWidget:
                         icon: "information"
+                        on_release: root.show_about()
                         
                 OneLineIconListItem:
                     text: "Say thanks"

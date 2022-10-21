@@ -1,10 +1,9 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivymd.uix.dialog import MDDialog
 import webbrowser
 import random
-
-
 
 
 deck = {"1♠": ["Playing-Cards/card-spades-1.png", 11],"2♠": ["Playing-Cards/card-spades-2.png", 2],"3♠": ["Playing-Cards/card-spades-3.png", 3],"4♠": ["Playing-Cards/card-spades-4.png", 4],"5♠": ["Playing-Cards/card-spades-5.png", 5],"6♠": ["Playing-Cards/card-spades-6.png", 6],"7♠": ["Playing-Cards/card-spades-7.png", 7],"8♠": ["Playing-Cards/card-spades-8.png", 8],"9♠": ["Playing-Cards/card-spades-9.png", 9],"10♠": ["Playing-Cards/card-spades-10.png", 10],"J♠": ["Playing-Cards/card-spades-11.png", 10],"Q♠": ["Playing-Cards/card-spades-12.png", 10],"K♠": ["Playing-Cards/card-spades-13.png", 10],"1♥": ["Playing-Cards/card-hearts-1.png", 11],"2♥": ["Playing-Cards/card-hearts-2.png", 2],"3♥": ["Playing-Cards/card-hearts-3.png", 3],"4♥": ["Playing-Cards/card-hearts-4.png", 4],"5♥": ["Playing-Cards/card-hearts-5.png", 5],"6♥": ["Playing-Cards/card-hearts-6.png", 6],"7♥": ["Playing-Cards/card-hearts-7.png", 7],"8♥": ["Playing-Cards/card-hearts-8.png", 8],"9♥": ["Playing-Cards/card-hearts-9.png", 9],"10♥": ["Playing-Cards/card-hearts-10.png", 10],"J♥": ["Playing-Cards/card-hearts-11.png", 10],"Q♥": ["Playing-Cards/card-hearts-12.png", 10],"K♥": ["Playing-Cards/card-hearts-13.png", 10],"1♣": ["Playing-Cards/card-clubs-1.png", 11],"2♣": ["Playing-Cards/card-clubs-2.png", 2],"3♣": ["Playing-Cards/card-clubs-3.png", 3],"4♣": ["Playing-Cards/card-clubs-4.png", 4],"5♣": ["Playing-Cards/card-clubs-5.png", 5],"6♣": ["Playing-Cards/card-clubs-6.png", 6],"7♣": ["Playing-Cards/card-clubs-7.png", 7],"8♣": ["Playing-Cards/card-clubs-8.png", 8],"9♣": ["Playing-Cards/card-clubs-9.png", 9],"10♣": ["Playing-Cards/card-clubs-10.png", 10],"J♣": ["Playing-Cards/card-clubs-11.png", 10],"Q♣": ["Playing-Cards/card-clubs-12.png", 10],"K♣": ["Playing-Cards/card-clubs-13.png", 10],"1♦": ["Playing-Cards/card-diamonds-1.png", 11],"2♦": ["Playing-Cards/card-diamonds-2.png", 2],"3♦": ["Playing-Cards/card-diamonds-3.png", 3],"4♦": ["Playing-Cards/card-diamonds-4.png", 4],"5♦": ["Playing-Cards/card-diamonds-5.png", 5],"6♦": ["Playing-Cards/card-diamonds-6.png", 6],"7♦": ["Playing-Cards/card-diamonds-7.png", 7],"8♦": ["Playing-Cards/card-diamonds-8.png", 8],"9♦": ["Playing-Cards/card-diamonds-9.png", 9],"10♦": ["Playing-Cards/card-diamonds-10.png", 10],"J♦": ["Playing-Cards/card-diamonds-11.png", 10],"Q♦": ["Playing-Cards/card-diamonds-12.png", 10],"K♦": ["Playing-Cards/card-diamonds-13.png", 10]}
@@ -141,24 +140,25 @@ class GameScreen(Screen):
                     self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
                     self.ids.dealer_card_three.height = "150dp"
                     self.ids.dealer_card_three.grow()
+                    dealer.append(deck[keys[d_hit_count + 1]][1])
                 elif self.ids.dealer_card_four.source == "":
-                    self.ids.dealer_card_four.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_four.source = deck[keys[d_hit_count + 2]][0]
                     self.ids.dealer_card_four.height = "150dp"
                     self.ids.dealer_card_four.grow()
+                    dealer.append(deck[keys[d_hit_count + 2]][1])
                 elif self.ids.dealer_card_five.source == "":
-                    self.ids.dealer_card_five.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_five.source = deck[keys[d_hit_count + 3]][0]
                     self.ids.dealer_card_five.height = "150dp"
                     self.ids.dealer_card_five.grow()
+                    dealer.append(deck[keys[d_hit_count + 3]][1])
                 elif self.ids.dealer_card_six.source == "":
-                    self.ids.dealer_card_six.source = deck[keys[d_hit_count + 1]][0]
+                    self.ids.dealer_card_six.source = deck[keys[d_hit_count + 4]][0]
                     self.ids.dealer_card_six.height = "150dp"
                     self.ids.dealer_card_six.grow()
+                    dealer.append(deck[keys[d_hit_count + 4]][1])
                 else:
                     break
 
-                    
-
-                dealer.append(deck[keys[d_hit_count + 1]][1])
 
                 dealer_check = sum(dealer)
             elif dealer_check >= 17:
@@ -240,6 +240,30 @@ class GameScreen(Screen):
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
+    
+    # functions for nav bar items
+        
+    def show_about(self):
+            self.dialog = MDDialog(
+                text="""
+Black Jack app   
+A simple card game    
+
+The cards were found here: https://cazwolf.itch.io/pixel-fantasy-cards 
+
+Credit for Caz/Caz Wolf Card Pack
+
+
+Splash Screen Image from: https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2238731
+
+Credit for Anna-Maria Bergman
+
+
+Licensed under the: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+
+""" )
+            self.dialog.open()
+        
         
     def donate_button(self):
         webbrowser.open('https://ko-fi.com/jessecreates', new = 2)

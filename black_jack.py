@@ -134,38 +134,32 @@ class GameScreen(Screen):
         dealer_check = sum(dealer)
         d_hit_count = len(player) + len(dealer)
 
-        while dealer_check != 21:
-            if dealer_check < 17:
-                if self.ids.dealer_card_three.source == "":
-                    self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
-                    self.ids.dealer_card_three.height = "150dp"
-                    self.ids.dealer_card_three.grow()
-                    dealer.append(deck[keys[d_hit_count + 1]][1])
-                elif self.ids.dealer_card_four.source == "":
-                    self.ids.dealer_card_four.source = deck[keys[d_hit_count + 2]][0]
-                    self.ids.dealer_card_four.height = "150dp"
-                    self.ids.dealer_card_four.grow()
-                    dealer.append(deck[keys[d_hit_count + 2]][1])
-                elif self.ids.dealer_card_five.source == "":
-                    self.ids.dealer_card_five.source = deck[keys[d_hit_count + 3]][0]
-                    self.ids.dealer_card_five.height = "150dp"
-                    self.ids.dealer_card_five.grow()
-                    dealer.append(deck[keys[d_hit_count + 3]][1])
-                elif self.ids.dealer_card_six.source == "":
-                    self.ids.dealer_card_six.source = deck[keys[d_hit_count + 4]][0]
-                    self.ids.dealer_card_six.height = "150dp"
-                    self.ids.dealer_card_six.grow()
-                    dealer.append(deck[keys[d_hit_count + 4]][1])
-                else:
-                    break
-
-
-                dealer_check = sum(dealer)
-            elif dealer_check >= 17:
+        while dealer_check != 21 and dealer_check < 17:
+            if self.ids.dealer_card_three.source == "":
+                self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
+                self.ids.dealer_card_three.height = "150dp"
+                self.ids.dealer_card_three.grow()
+                dealer.append(deck[keys[d_hit_count + 1]][1])
+            elif self.ids.dealer_card_four.source == "":
+                self.ids.dealer_card_four.source = deck[keys[d_hit_count + 2]][0]
+                self.ids.dealer_card_four.height = "150dp"
+                self.ids.dealer_card_four.grow()
+                dealer.append(deck[keys[d_hit_count + 2]][1])
+            elif self.ids.dealer_card_five.source == "":
+                self.ids.dealer_card_five.source = deck[keys[d_hit_count + 3]][0]
+                self.ids.dealer_card_five.height = "150dp"
+                self.ids.dealer_card_five.grow()
+                dealer.append(deck[keys[d_hit_count + 3]][1])
+            elif self.ids.dealer_card_six.source == "":
+                self.ids.dealer_card_six.source = deck[keys[d_hit_count + 4]][0]
+                self.ids.dealer_card_six.height = "150dp"
+                self.ids.dealer_card_six.grow()
+                dealer.append(deck[keys[d_hit_count + 4]][1])
+            else:
                 break
 
 
-            
+            dealer_check = sum(dealer)
         stay_counter.append(1)
         self.check_score()
 
@@ -192,15 +186,15 @@ class GameScreen(Screen):
 
                 dealer_score = sum(dealer)
 
-       
+
         if len(stay_counter) == 2:
             if player_score == dealer_score:
                 self.ids.prompt.text = "You tied!" 
-                self.reset_game()   
+                self.reset_game()
             elif player_score > dealer_score and player_score < 21:
                 self.ids.prompt.text = "You won!"
                 self.reset_game()
-            elif player_score < dealer_score and dealer_score < 21:
+            elif player_score < dealer_score < 21:
                 self.ids.prompt.text = "The Dealer won!"
                 self.reset_game()
 
@@ -208,10 +202,10 @@ class GameScreen(Screen):
         if player_score == 21 and dealer_score == 21:
             self.ids.prompt.text = "Its a tie at 21!"
             self.reset_game()
-        elif player_score == 21 and dealer_score != 21:
+        elif player_score == 21:
             self.ids.prompt.text = "You won with a 21!"
             self.reset_game()
-        elif player_score != 21 and dealer_score == 21:
+        elif dealer_score == 21:
             self.ids.prompt.text = "The Dealer won with 21!"
             self.reset_game()
         elif player_score > 21 and dealer_score < 21:

@@ -15,6 +15,7 @@ player = []
 dealer = []
 
 stay_counter = []
+player_wins = []
 
 class SplashWindow(Screen):
     
@@ -167,6 +168,8 @@ class GameScreen(Screen):
    
     def check_score(self):
 
+        third_win = "Dealer: Oh! You won 3 times! You win a prize! I'm joking, you haven't done anything amazing."
+
         player_score = sum(player)
         dealer_score = sum(dealer)
 
@@ -193,6 +196,9 @@ class GameScreen(Screen):
                 self.reset_game()
             elif player_score > dealer_score and player_score < 21:
                 self.ids.prompt.text = "You won!"
+                player_wins.append(1)
+                if len(player_wins) == 3:
+                    self.ids.prompt.text = third_win
                 self.reset_game()
             elif player_score < dealer_score < 21:
                 self.ids.prompt.text = "The Dealer won!"
@@ -204,6 +210,9 @@ class GameScreen(Screen):
             self.reset_game()
         elif player_score == 21:
             self.ids.prompt.text = "You won with a 21!"
+            player_wins.append(1)
+            if len(player_wins) == 3:
+                self.ids.prompt.text = third_win
             self.reset_game()
         elif dealer_score == 21:
             self.ids.prompt.text = "The Dealer won with 21!"
@@ -213,6 +222,9 @@ class GameScreen(Screen):
             self.reset_game()
         elif player_score < 21 and dealer_score > 21:
             self.ids.prompt.text = "You won. The Dealer busted 21!"
+            player_wins.append(1)
+            if len(player_wins) == 3:
+                self.ids.prompt.text = third_win
             self.reset_game()
 
 

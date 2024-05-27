@@ -23,10 +23,8 @@ jobs:
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-      with:
-        cmdline-tools-version: 10406996
+    - name: Setup Android SDK Tools
+      uses: android-actions/setup-android@v3.2.1
     
     - name: Build APK
       run: |

@@ -4,6 +4,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.dialog import MDDialog
 import webbrowser
 import random
+import sys
 
 deck = {"1♠": ["Playing-Cards/card-spades-1.png", 11], "2♠": ["Playing-Cards/card-spades-2.png", 2],
         "3♠": ["Playing-Cards/card-spades-3.png", 3], "4♠": ["Playing-Cards/card-spades-4.png", 4],
@@ -271,7 +272,7 @@ Licensed under the: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
         webbrowser.open('https://ko-fi.com/jessecreates', new=2)
 
     def close_two(self):
-        exit()
+        sys.exit(0)
 
 
 class NavBar(Screen):

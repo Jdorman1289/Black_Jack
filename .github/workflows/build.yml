@@ -13,8 +13,10 @@ jobs:
       with:
         python-version: '3.11'
   
-    - name: Clear Buildozer cache
-      run: rm -rf ~/.buildozer
+    - name: Clear cache
+      run: 
+        rm -rf ~/.buildozer
+        rm -rf /usr/local/lib/android/sdk/cmdline-tools
 
     - name: Install dependencies
       run: |

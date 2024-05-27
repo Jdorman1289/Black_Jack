@@ -16,7 +16,6 @@ jobs:
     - name: Clear cache
       run: 
         rm -rf ~/.buildozer
-        rm -rf /usr/local/lib/android/sdk/cmdline-tools
 
     - name: Install dependencies
       run: |
@@ -27,6 +26,8 @@ jobs:
 
     - name: Setup Android SDK Tools
       uses: android-actions/setup-android@v3.2.1
+      with:
+        cmdline-tools-version: latest
     
     - name: Build APK
       run: |

@@ -25,8 +25,11 @@ jobs:
       uses: android-actions/setup-android@v3
       with:
         cmdline-tools-version: 'latest'
-        packages: 'build-tools;30.0.3,platforms;android-30'
         accept-android-sdk-licenses: true
+
+    - name: Install Android SDK packages
+      run: |
+        sdkmanager "build-tools;30.0.3" "platforms;android-30"
 
     - name: Build APK
       run: |

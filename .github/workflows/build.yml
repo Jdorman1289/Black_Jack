@@ -29,6 +29,10 @@ jobs:
       with:
         cmdline-tools-version: latest
         packages: 'build-tools;35.0.0-rc4'
+  
+    - name: build tools
+      run: |
+        echo "y" | ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager "build-tools;35.0.0-rc4"
     
     - name: Build APK
       run: |

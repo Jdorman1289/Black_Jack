@@ -29,7 +29,7 @@ jobs:
 
     - name: Install additional Android SDK packages
       run: |
-        sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;35.0.0-rc4"
 
     # - name: Accept licenses
     #   run: |

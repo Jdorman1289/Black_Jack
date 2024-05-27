@@ -25,13 +25,9 @@ jobs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-      with:
-        cmdline-tools-version: 'latest'
-        accept-android-sdk-licenses: true
-  
-    - name: Accept licenses
-      run: |
-        /bin/bash -c "yes | sdkmanager --licenses"
+      # with:
+      #   cmdline-tools-version: 'latest'
+      #   accept-android-sdk-licenses: true
     
     - name: Build APK
       run: |

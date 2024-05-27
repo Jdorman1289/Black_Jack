@@ -28,26 +28,14 @@ jobs:
         accept-android-sdk-licenses: true
 
     - name: Install additional Android SDK packages
-      uses: android-actions/setup-android@v3
-      with:
-        cmdline-tools-version: 'latest'
-        accept-android-sdk-licenses: true
-        run: |
-          sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
-
-    # - name: Accept licenses
-    #   run: |
-    #     yes | sdkmanager --licenses
-
+      run: |
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
+      
     - name: Build APK
-      uses: android-actions/setup-android@v3
-      with:
-        cmdline-tools-version: 'latest'
-        accept-android-sdk-licenses: true
-        run: |
-          buildozer init
-          sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
-          buildozer -v android debug
+      run: |
+        buildozer init
+        sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
+        buildozer -v android debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v2

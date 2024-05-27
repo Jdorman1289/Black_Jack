@@ -30,10 +30,10 @@ jobs:
     - name: Install additional Android SDK packages
       run: |
         sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
-        yes | sdkmanager --licenses
       
     - name: Build APK
       run: |
+        yes | sdkmanager --licenses
         buildozer init
         sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
         buildozer -v android debug

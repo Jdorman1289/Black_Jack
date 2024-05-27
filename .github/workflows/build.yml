@@ -11,7 +11,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
@@ -19,17 +19,17 @@ jobs:
         sudo apt install -y git zip unzip openjdk-8-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
-        pip install setuptools
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-      with:
-        cmdline-tools-version: 'latest'
-        accept-android-sdk-licenses: true
 
-    - name: Install Android SDK packages
-      run: |
-        sdkmanager "build-tools;30.0.3" "platforms;android-30"
+    # - name: Setup Android SDK
+    #   uses: android-actions/setup-android@v3
+    #   with:
+    #     cmdline-tools-version: 'latest'
+    #     accept-android-sdk-licenses: true
+
+    # - name: Install Android SDK packages
+    #   run: |
+    #     sdkmanager "build-tools;30.0.3" "platforms;android-30"
 
     - name: Build APK
       run: |

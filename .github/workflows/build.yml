@@ -7,10 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.11'
+
     - name: Install dependencies
       run: |
         sudo apt update
@@ -18,26 +20,27 @@ jobs:
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
         pip install setuptools
+
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       with:
         cmdline-tools-version: 'latest'
         accept-android-sdk-licenses: true
+
     - name: Install additional Android SDK packages
-      uses: android-actions/setup-android@v3
-      with:
-        cmdline-tools-version: 'latest'
-        accept-android-sdk-licenses: true
-        run: |
-          sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
-    - name: Accept licenses
       run: |
-        yes | sdkmanager --licenses
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
+
+    # - name: Accept licenses
+    #   run: |
+    #     yes | sdkmanager --licenses
+
     - name: Build APK
       run: |
         buildozer init
         sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
         buildozer -v android debug
+
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:

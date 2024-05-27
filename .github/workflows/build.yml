@@ -12,6 +12,9 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+  
+    - name: Clear Buildozer cache
+      run: rm -rf ~/.buildozer
 
     - name: Install dependencies
       run: |
@@ -20,13 +23,9 @@ jobs:
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
     
-    # - name: Clear Buildozer cache
-    #   run: rm -rf ~/.buildozer
-
     - name: Build APK
-      env:
-        ANDROID_SDK_TOOLS_LICENSE: "24333f8a63b6825ea9c5514f83c2829b004d1fee"
       run: |
+        /bin/bash -c "yes | sdkmanager --licenses"
         buildozer init
         sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
         buildozer -v android debug

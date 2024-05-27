@@ -23,11 +23,13 @@ jobs:
       with:
         cmdline-tools-version: 'latest'
         accept-android-sdk-licenses: true
-    - name: Add Android SDK to PATH
-      run: echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
     - name: Install additional Android SDK packages
-      run: |
-        sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+      uses: android-actions/setup-android@v3
+      with:
+        cmdline-tools-version: 'latest'
+        accept-android-sdk-licenses: true
+        run: |
+          sdkmanager "platform-tools" "platforms;android-30" "build-tools;34.0.0-rc3"
     - name: Accept licenses
       run: |
         yes | sdkmanager --licenses

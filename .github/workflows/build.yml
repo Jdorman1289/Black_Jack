@@ -20,8 +20,8 @@ jobs:
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
     
-    - name: Clear Buildozer cache
-      run: rm -rf ~/.buildozer
+    # - name: Clear Buildozer cache
+    #   run: rm -rf ~/.buildozer
 
     - name: Build APK
       env:

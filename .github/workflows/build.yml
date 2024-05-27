@@ -25,7 +25,7 @@ jobs:
       uses: android-actions/setup-android@v3
       with:
         cmdline-tools-version: 'latest'
-        packages: 'build-tools;35.0.0-rc4,platforms;android-30'
+        packages: 'build-tools;30.0.3,platforms;android-30'
         accept-android-sdk-licenses: true
 
     - name: Build APK

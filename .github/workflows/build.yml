@@ -18,6 +18,12 @@ jobs:
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
         pip install setuptools
+    - name: Install Android SDK and accept licenses
+      run: |
+        mkdir -p $HOME/.android
+        touch $HOME/.android/repositories.cfg
+        yes | sdkmanager --licenses
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
     - name: Build APK
       run: |
         buildozer init

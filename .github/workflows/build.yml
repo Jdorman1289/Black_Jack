@@ -22,10 +22,19 @@ jobs:
         sudo apt install -y git zip unzip openjdk-8-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
         pip install --upgrade Cython==0.29.19 virtualenv
         pip install buildozer
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      with:
+        cmdline-tools-version: 'latest'
+        accept-android-sdk-licenses: true
+  
+    - name: Accept licenses
+      run: |
+        /bin/bash -c "yes | sdkmanager --licenses"
     
     - name: Build APK
       run: |
-        /bin/bash -c "yes | sdkmanager --licenses"
         buildozer init
         sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
         buildozer -v android debug

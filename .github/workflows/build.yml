@@ -58,7 +58,7 @@ jobs:
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
-          workdir: test_app
+          workdir: Black_Jack
           buildozer_version: stable
 
       - name: Upload APK

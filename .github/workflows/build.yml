@@ -33,9 +33,8 @@ jobs:
     - name: Build APK
       run: |
         buildozer init
-        sleep 4
         sed -i 's/^requirements = python3,kivy$/requirements = python3,kivy,kivymd,pillow/' buildozer.spec
-        sed -i 's/^android.ant_path = .*/android.ant_path = true/' buildozer.spec
+        sed -i 's/^android.ant_path = .*/android.ant_path = True/' buildozer.spec
         buildozer -v android debug
 
     - name: Upload APK

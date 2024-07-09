@@ -36,6 +36,10 @@ jobs:
         yes | sdkmanager --licenses
         yes | sdkmanager --update
 
+    - name: Install specific Android Build Tools
+      run: |
+        sdkmanager "build-tools;30.0.3"
+
     - name: Install Buildozer dependencies
       run: |
         sudo apt-get install -y libltdl-dev libffi-dev libssl-dev autoconf autotools-dev
@@ -45,8 +49,7 @@ jobs:
 
     - name: Build APK with Buildozer
       run: |
-        buildozer init
-        buildozer -v android debug
+        buildozer android debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v2

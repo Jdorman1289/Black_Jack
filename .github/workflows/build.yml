@@ -36,9 +36,9 @@ jobs:
         yes | sdkmanager --licenses
         yes | sdkmanager --update
 
-    - name: Install specific Android Build Tools
+    - name: Install specific Android Build Tools and NDK
       run: |
-        sdkmanager "build-tools;30.0.3"
+        sdkmanager "build-tools;30.0.3" "ndk;25.2.9519653"
 
     - name: Install Buildozer dependencies
       run: |

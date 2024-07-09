@@ -38,7 +38,7 @@ jobs:
 
     - name: Install specific Android Build Tools and NDK
       run: |
-        sdkmanager "build-tools;30.0.3" "ndk;25.2.9519653"
+        sdkmanager "build-tools;30.0.3" "ndk;25b"
 
     - name: Install Buildozer dependencies
       run: |

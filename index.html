@@ -11,24 +11,31 @@
             font-family: Arial, sans-serif;
             background-color: #0a4d0a;
             color: #ffffff;
-        }
-        .card {
-            width: 100px;
-            height: 150px;
-            display: inline-block;
-            margin: 5px;
-        }
-        #player-cards, #dealer-cards {
-            min-height: 160px;
-            background-color: #0d620d;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            margin: 0;
+            padding: 0;
         }
         #game-area {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
             text-align: center;
+            padding: 10px;
+        }
+        .card-area {
+            background-color: #0d620d;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            width: 60px;
+            height: 90px;
+            margin: 2px;
+        }
+        .active-hand {
+            box-shadow: 0 0 10px 5px #ffd700;
         }
         button {
             background-color: #4a0e4a;
@@ -46,22 +53,52 @@
         }
         h1 {
             color: #ffd700;
+            font-size: 24px;
+            margin: 10px 0;
         }
-        #score {
-            font-size: 1.2em;
+        #score, #game-stats {
+            font-size: 1em;
             margin-bottom: 10px;
+        }
+        #button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Media query for larger screens */
+        @media (min-width: 768px) {
+            #game-area {
+                max-width: 800px;
+            }
+            .card {
+                width: 100px;
+                height: 150px;
+                margin: 5px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            #score, #game-stats {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
     <div id="game-area">
-        <h1>PyScript Blackjack</h1>
-        <div id="dealer-cards"></div>
-        <div id="player-cards"></div>
+        <h1>Blackjack</h1>
+        <div id="dealer-cards" class="card-area"></div>
+        <div id="player-cards" class="card-area"></div>
+        <div id="split-cards" class="card-area"></div>
         <div id="score"></div>
-        <button id="deal-button" py-click="deal_cards()">Deal</button>
-        <button id="hit-button" py-click="hit()" disabled>Hit</button>
-        <button id="stay-button" py-click="stay()" disabled>Stay</button>
+        <div id="game-stats"></div>
+        <div id="button-container">
+            <button id="deal-button" py-click="deal_cards()">Deal</button>
+            <button id="hit-button" py-click="hit()" disabled>Hit</button>
+            <button id="stay-button" py-click="stay()" disabled>Stay</button>
+            <button id="split-button" py-click="split()" disabled>Split</button>
+        </div>
     </div>
 
     <py-script>
@@ -101,19 +138,41 @@ deck = {
 keys = list(deck.keys())
 player = []
 dealer = []
+split_hand = []
 stay_counter = []
+games_won = 0
+games_lost = 0
+current_hand = 'player'
 
 def update_display():
     player_area = document.querySelector("#player-cards")
     dealer_area = document.querySelector("#dealer-cards")
+    split_area = document.querySelector("#split-cards")
     player_area.innerHTML = ""
     dealer_area.innerHTML = ""
+    split_area.innerHTML = ""
+
+    # Remove active-hand class from all areas
+    player_area.classList.remove("active-hand")
+    split_area.classList.remove("active-hand")
+
+    # Add active-hand class to the current hand
+    if current_hand == 'player':
+        player_area.classList.add("active-hand")
+    elif current_hand == 'split':
+        split_area.classList.add("active-hand")
 
     for card in player:
         img = document.createElement("img")
         img.src = deck[card][0]
         img.className = "card"
         player_area.appendChild(img)
+
+    for card in split_hand:
+        img = document.createElement("img")
+        img.src = deck[card][0]
+        img.className = "card"
+        split_area.appendChild(img)
 
     for i, card in enumerate(dealer):
         img = document.createElement("img")
@@ -124,13 +183,25 @@ def update_display():
         img.className = "card"
         dealer_area.appendChild(img)
 
-    document.querySelector("#score").textContent = f"Player: {sum([deck[c][1] for c in player])} | Dealer: {sum([deck[c][1] for c in dealer]) if len(stay_counter) > 0 else '?'}"
+    player_score = sum([deck[c][1] for c in player])
+    split_score = sum([deck[c][1] for c in split_hand]) if split_hand else None
+    dealer_score = sum([deck[c][1] for c in dealer]) if len(stay_counter) > 0 else '?'
+
+    score_text = f"Player: {player_score}"
+    if split_score is not None:
+        score_text += f" | Split: {split_score}"
+    score_text += f" | Dealer: {dealer_score}"
+
+    document.querySelector("#score").textContent = score_text
+    document.querySelector("#game-stats").textContent = f"Games Won: {games_won} | Games Lost: {games_lost}"
 
 def deal_cards():
-    global player, dealer, keys, stay_counter
+    global player, dealer, split_hand, keys, stay_counter, current_hand
     player = []
     dealer = []
+    split_hand = []
     stay_counter = []
+    current_hand = 'player'
     random.shuffle(keys)
     
     player.append(keys.pop())
@@ -142,16 +213,37 @@ def deal_cards():
     document.querySelector("#deal-button").disabled = True
     document.querySelector("#hit-button").disabled = False
     document.querySelector("#stay-button").disabled = False
+    document.querySelector("#split-button").disabled = deck[player[0]][1] != deck[player[1]][1]
 
 def hit():
-    player.append(keys.pop())
+    global current_hand
+    if current_hand == 'player':
+        player.append(keys.pop())
+    else:
+        split_hand.append(keys.pop())
     update_display()
     check_score()
 
 def stay():
+    global current_hand, stay_counter
     stay_counter.append(1)
-    npc()
-    check_score()
+    if current_hand == 'player' and split_hand:
+        current_hand = 'split'
+        document.querySelector("#hit-button").disabled = False
+        document.querySelector("#stay-button").disabled = False
+    else:
+        npc()
+        check_score()
+    update_display()
+
+def split():
+    global split_hand, player, current_hand
+    split_hand.append(player.pop())
+    player.append(keys.pop())
+    split_hand.append(keys.pop())
+    current_hand = 'player'
+    update_display()
+    document.querySelector("#split-button").disabled = True
 
 def npc():
     while sum([deck[c][1] for c in dealer]) < 17:
@@ -159,30 +251,49 @@ def npc():
     update_display()
 
 def check_score():
+    global games_won, games_lost, current_hand
     player_score = sum([deck[c][1] for c in player])
+    split_score = sum([deck[c][1] for c in split_hand]) if split_hand else None
     dealer_score = sum([deck[c][1] for c in dealer])
 
     if player_score > 21:
-        end_game("Player busts! Dealer wins!")
+        if split_hand and current_hand == 'player':
+            current_hand = 'split'
+            update_display()
+            return
+        elif split_score is None or split_score > 21:
+            end_game("Player busts! Dealer wins!")
+            games_lost += 1
     elif len(stay_counter) > 0:
         if dealer_score > 21:
-            end_game("Dealer busts! Player wins!")
-        elif player_score > dealer_score:
-            end_game("Player wins!")
-        elif dealer_score > player_score:
-            end_game("Dealer wins!")
+            if player_score <= 21 or (split_score is not None and split_score <= 21):
+                end_game("Dealer busts! Player wins!")
+                games_won += 1
+            else:
+                end_game("Everyone busts! It's a tie!")
         else:
-            end_game("It's a tie!")
+            player_wins = (player_score <= 21 and player_score > dealer_score) or (split_score is not None and split_score <= 21 and split_score > dealer_score)
+            dealer_wins = (player_score <= 21 and dealer_score > player_score) and (split_score is None or (split_score <= 21 and dealer_score > split_score))
+            
+            if player_wins:
+                end_game("Player wins!")
+                games_won += 1
+            elif dealer_wins:
+                end_game("Dealer wins!")
+                games_lost += 1
+            else:
+                end_game("It's a tie!")
 
 def end_game(message):
     document.querySelector("#score").textContent += f" | {message}"
     document.querySelector("#deal-button").disabled = False
     document.querySelector("#hit-button").disabled = True
     document.querySelector("#stay-button").disabled = True
+    document.querySelector("#split-button").disabled = True
+    update_display()
 
 # Initialize the game
 deal_cards()
-
     </py-script>
 </body>
 </html>

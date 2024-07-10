@@ -135,7 +135,8 @@ deck = {
     "Q♦": ["Playing-Cards/card-diamonds-12.png", 10], "K♦": ["Playing-Cards/card-diamonds-13.png", 10]
 }
 
-keys = list(deck.keys())
+original_keys = list(deck.keys())
+keys = original_keys.copy()
 player = []
 dealer = []
 split_hand = []
@@ -143,6 +144,11 @@ stay_counter = []
 games_won = 0
 games_lost = 0
 current_hand = 'player'
+
+def reset_deck():
+    global keys
+    keys = original_keys.copy()
+    random.shuffle(keys)
 
 def update_display():
     player_area = document.querySelector("#player-cards")
@@ -152,11 +158,9 @@ def update_display():
     dealer_area.innerHTML = ""
     split_area.innerHTML = ""
 
-    # Remove active-hand class from all areas
     player_area.classList.remove("active-hand")
     split_area.classList.remove("active-hand")
 
-    # Add active-hand class to the current hand
     if current_hand == 'player':
         player_area.classList.add("active-hand")
     elif current_hand == 'split':
@@ -176,7 +180,7 @@ def update_display():
 
     for i, card in enumerate(dealer):
         img = document.createElement("img")
-        if i == 0 and len(stay_counter) == 0:
+        if i == 0 and len(stay_counter) < 2:
             img.src = "Playing-Cards/card-back2.png"
         else:
             img.src = deck[card][0]
@@ -185,7 +189,7 @@ def update_display():
 
     player_score = sum([deck[c][1] for c in player])
     split_score = sum([deck[c][1] for c in split_hand]) if split_hand else None
-    dealer_score = sum([deck[c][1] for c in dealer]) if len(stay_counter) > 0 else '?'
+    dealer_score = sum([deck[c][1] for c in dealer]) if len(stay_counter) == 2 else '?'
 
     score_text = f"Player: {player_score}"
     if split_score is not None:
@@ -197,12 +201,13 @@ def update_display():
 
 def deal_cards():
     global player, dealer, split_hand, keys, stay_counter, current_hand
+    if len(keys) < 10:
+        reset_deck()
     player = []
     dealer = []
     split_hand = []
     stay_counter = []
     current_hand = 'player'
-    random.shuffle(keys)
     
     player.append(keys.pop())
     dealer.append(keys.pop())
@@ -216,7 +221,9 @@ def deal_cards():
     document.querySelector("#split-button").disabled = deck[player[0]][1] != deck[player[1]][1]
 
 def hit():
-    global current_hand
+    global current_hand, keys
+    if len(keys) == 0:
+        reset_deck()
     if current_hand == 'player':
         player.append(keys.pop())
     else:
@@ -231,13 +238,15 @@ def stay():
         current_hand = 'split'
         document.querySelector("#hit-button").disabled = False
         document.querySelector("#stay-button").disabled = False
-    else:
+    elif len(stay_counter) == 2 or not split_hand:
         npc()
         check_score()
     update_display()
 
 def split():
-    global split_hand, player, current_hand
+    global split_hand, player, current_hand, keys
+    if len(keys) < 2:
+        reset_deck()
     split_hand.append(player.pop())
     player.append(keys.pop())
     split_hand.append(keys.pop())
@@ -246,7 +255,10 @@ def split():
     document.querySelector("#split-button").disabled = True
 
 def npc():
+    global keys
     while sum([deck[c][1] for c in dealer]) < 17:
+        if len(keys) == 0:
+            reset_deck()
         dealer.append(keys.pop())
     update_display()
 
@@ -256,15 +268,10 @@ def check_score():
     split_score = sum([deck[c][1] for c in split_hand]) if split_hand else None
     dealer_score = sum([deck[c][1] for c in dealer])
 
-    if player_score > 21:
-        if split_hand and current_hand == 'player':
-            current_hand = 'split'
-            update_display()
-            return
-        elif split_score is None or split_score > 21:
-            end_game("Player busts! Dealer wins!")
-            games_lost += 1
-    elif len(stay_counter) > 0:
+    if player_score > 21 and (split_score is None or split_score > 21):
+        end_game("Player busts! Dealer wins!")
+        games_lost += 1
+    elif len(stay_counter) == 2 or (len(stay_counter) == 1 and not split_hand):
         if dealer_score > 21:
             if player_score <= 21 or (split_score is not None and split_score <= 21):
                 end_game("Dealer busts! Player wins!")
@@ -272,17 +279,32 @@ def check_score():
             else:
                 end_game("Everyone busts! It's a tie!")
         else:
-            player_wins = (player_score <= 21 and player_score > dealer_score) or (split_score is not None and split_score <= 21 and split_score > dealer_score)
-            dealer_wins = (player_score <= 21 and dealer_score > player_score) and (split_score is None or (split_score <= 21 and dealer_score > split_score))
+            player_wins = 0
+            player_losses = 0
             
-            if player_wins:
+            if player_score <= 21:
+                if player_score > dealer_score:
+                    player_wins += 1
+                elif player_score < dealer_score:
+                    player_losses += 1
+            
+            if split_score is not None and split_score <= 21:
+                if split_score > dealer_score:
+                    player_wins += 1
+                elif split_score < dealer_score:
+                    player_losses += 1
+            
+            if player_wins > player_losses:
                 end_game("Player wins!")
                 games_won += 1
-            elif dealer_wins:
+            elif player_losses > player_wins:
                 end_game("Dealer wins!")
                 games_lost += 1
             else:
                 end_game("It's a tie!")
+    elif current_hand == 'player' and split_hand:
+        current_hand = 'split'
+        update_display()
 
 def end_game(message):
     document.querySelector("#score").textContent += f" | {message}"
@@ -293,6 +315,7 @@ def end_game(message):
     update_display()
 
 # Initialize the game
+reset_deck()
 deal_cards()
     </py-script>
 </body>

@@ -144,13 +144,16 @@ stay_counter = []
 games_won = 0
 games_lost = 0
 current_hand = 'player'
+game_over = False
 
 def reset_deck():
-    global keys
+    global keys, game_over
     keys = original_keys.copy()
     random.shuffle(keys)
+    game_over = False
 
 def update_display():
+    global game_over
     player_area = document.querySelector("#player-cards")
     dealer_area = document.querySelector("#dealer-cards")
     split_area = document.querySelector("#split-cards")
@@ -180,7 +183,7 @@ def update_display():
 
     for i, card in enumerate(dealer):
         img = document.createElement("img")
-        if i == 0 and len(stay_counter) < 2:
+        if i == 0 and not game_over:
             img.src = "Playing-Cards/card-back2.png"
         else:
             img.src = deck[card][0]
@@ -189,7 +192,7 @@ def update_display():
 
     player_score = sum([deck[c][1] for c in player])
     split_score = sum([deck[c][1] for c in split_hand]) if split_hand else None
-    dealer_score = sum([deck[c][1] for c in dealer]) if len(stay_counter) == 2 else '?'
+    dealer_score = sum([deck[c][1] for c in dealer]) if game_over else '?'
 
     score_text = f"Player: {player_score}"
     if split_score is not None:
@@ -200,7 +203,7 @@ def update_display():
     document.querySelector("#game-stats").textContent = f"Games Won: {games_won} | Games Lost: {games_lost}"
 
 def deal_cards():
-    global player, dealer, split_hand, keys, stay_counter, current_hand
+    global player, dealer, split_hand, keys, stay_counter, current_hand, game_over
     if len(keys) < 10:
         reset_deck()
     player = []
@@ -208,6 +211,7 @@ def deal_cards():
     split_hand = []
     stay_counter = []
     current_hand = 'player'
+    game_over = False  # Reset game_over when dealing a new hand
     
     player.append(keys.pop())
     dealer.append(keys.pop())
@@ -307,6 +311,8 @@ def check_score():
         update_display()
 
 def end_game(message):
+    global game_over
+    game_over = True
     document.querySelector("#score").textContent += f" | {message}"
     document.querySelector("#deal-button").disabled = False
     document.querySelector("#hit-button").disabled = True

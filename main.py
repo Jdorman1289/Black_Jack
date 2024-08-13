@@ -6,32 +6,60 @@ import webbrowser
 import random
 import sys
 
-deck = {"1♠": ["Playing-Cards/card-spades-1.png", 11], "2♠": ["Playing-Cards/card-spades-2.png", 2],
-        "3♠": ["Playing-Cards/card-spades-3.png", 3], "4♠": ["Playing-Cards/card-spades-4.png", 4],
-        "5♠": ["Playing-Cards/card-spades-5.png", 5], "6♠": ["Playing-Cards/card-spades-6.png", 6],
-        "7♠": ["Playing-Cards/card-spades-7.png", 7], "8♠": ["Playing-Cards/card-spades-8.png", 8],
-        "9♠": ["Playing-Cards/card-spades-9.png", 9], "10♠": ["Playing-Cards/card-spades-10.png", 10],
-        "J♠": ["Playing-Cards/card-spades-11.png", 10], "Q♠": ["Playing-Cards/card-spades-12.png", 10],
-        "K♠": ["Playing-Cards/card-spades-13.png", 10], "1♥": ["Playing-Cards/card-hearts-1.png", 11],
-        "2♥": ["Playing-Cards/card-hearts-2.png", 2], "3♥": ["Playing-Cards/card-hearts-3.png", 3],
-        "4♥": ["Playing-Cards/card-hearts-4.png", 4], "5♥": ["Playing-Cards/card-hearts-5.png", 5],
-        "6♥": ["Playing-Cards/card-hearts-6.png", 6], "7♥": ["Playing-Cards/card-hearts-7.png", 7],
-        "8♥": ["Playing-Cards/card-hearts-8.png", 8], "9♥": ["Playing-Cards/card-hearts-9.png", 9],
-        "10♥": ["Playing-Cards/card-hearts-10.png", 10], "J♥": ["Playing-Cards/card-hearts-11.png", 10],
-        "Q♥": ["Playing-Cards/card-hearts-12.png", 10], "K♥": ["Playing-Cards/card-hearts-13.png", 10],
-        "1♣": ["Playing-Cards/card-clubs-1.png", 11], "2♣": ["Playing-Cards/card-clubs-2.png", 2],
-        "3♣": ["Playing-Cards/card-clubs-3.png", 3], "4♣": ["Playing-Cards/card-clubs-4.png", 4],
-        "5♣": ["Playing-Cards/card-clubs-5.png", 5], "6♣": ["Playing-Cards/card-clubs-6.png", 6],
-        "7♣": ["Playing-Cards/card-clubs-7.png", 7], "8♣": ["Playing-Cards/card-clubs-8.png", 8],
-        "9♣": ["Playing-Cards/card-clubs-9.png", 9], "10♣": ["Playing-Cards/card-clubs-10.png", 10],
-        "J♣": ["Playing-Cards/card-clubs-11.png", 10], "Q♣": ["Playing-Cards/card-clubs-12.png", 10],
-        "K♣": ["Playing-Cards/card-clubs-13.png", 10], "1♦": ["Playing-Cards/card-diamonds-1.png", 11],
-        "2♦": ["Playing-Cards/card-diamonds-2.png", 2], "3♦": ["Playing-Cards/card-diamonds-3.png", 3],
-        "4♦": ["Playing-Cards/card-diamonds-4.png", 4], "5♦": ["Playing-Cards/card-diamonds-5.png", 5],
-        "6♦": ["Playing-Cards/card-diamonds-6.png", 6], "7♦": ["Playing-Cards/card-diamonds-7.png", 7],
-        "8♦": ["Playing-Cards/card-diamonds-8.png", 8], "9♦": ["Playing-Cards/card-diamonds-9.png", 9],
-        "10♦": ["Playing-Cards/card-diamonds-10.png", 10], "J♦": ["Playing-Cards/card-diamonds-11.png", 10],
-        "Q♦": ["Playing-Cards/card-diamonds-12.png", 10], "K♦": ["Playing-Cards/card-diamonds-13.png", 10]}
+deck = {
+    "1♠": ["Playing-Cards/card-spades-1.png", 11],
+    "2♠": ["Playing-Cards/card-spades-2.png", 2],
+    "3♠": ["Playing-Cards/card-spades-3.png", 3],
+    "4♠": ["Playing-Cards/card-spades-4.png", 4],
+    "5♠": ["Playing-Cards/card-spades-5.png", 5],
+    "6♠": ["Playing-Cards/card-spades-6.png", 6],
+    "7♠": ["Playing-Cards/card-spades-7.png", 7],
+    "8♠": ["Playing-Cards/card-spades-8.png", 8],
+    "9♠": ["Playing-Cards/card-spades-9.png", 9],
+    "10♠": ["Playing-Cards/card-spades-10.png", 10],
+    "J♠": ["Playing-Cards/card-spades-11.png", 10],
+    "Q♠": ["Playing-Cards/card-spades-12.png", 10],
+    "K♠": ["Playing-Cards/card-spades-13.png", 10],
+    "1♥": ["Playing-Cards/card-hearts-1.png", 11],
+    "2♥": ["Playing-Cards/card-hearts-2.png", 2],
+    "3♥": ["Playing-Cards/card-hearts-3.png", 3],
+    "4♥": ["Playing-Cards/card-hearts-4.png", 4],
+    "5♥": ["Playing-Cards/card-hearts-5.png", 5],
+    "6♥": ["Playing-Cards/card-hearts-6.png", 6],
+    "7♥": ["Playing-Cards/card-hearts-7.png", 7],
+    "8♥": ["Playing-Cards/card-hearts-8.png", 8],
+    "9♥": ["Playing-Cards/card-hearts-9.png", 9],
+    "10♥": ["Playing-Cards/card-hearts-10.png", 10],
+    "J♥": ["Playing-Cards/card-hearts-11.png", 10],
+    "Q♥": ["Playing-Cards/card-hearts-12.png", 10],
+    "K♥": ["Playing-Cards/card-hearts-13.png", 10],
+    "1♣": ["Playing-Cards/card-clubs-1.png", 11],
+    "2♣": ["Playing-Cards/card-clubs-2.png", 2],
+    "3♣": ["Playing-Cards/card-clubs-3.png", 3],
+    "4♣": ["Playing-Cards/card-clubs-4.png", 4],
+    "5♣": ["Playing-Cards/card-clubs-5.png", 5],
+    "6♣": ["Playing-Cards/card-clubs-6.png", 6],
+    "7♣": ["Playing-Cards/card-clubs-7.png", 7],
+    "8♣": ["Playing-Cards/card-clubs-8.png", 8],
+    "9♣": ["Playing-Cards/card-clubs-9.png", 9],
+    "10♣": ["Playing-Cards/card-clubs-10.png", 10],
+    "J♣": ["Playing-Cards/card-clubs-11.png", 10],
+    "Q♣": ["Playing-Cards/card-clubs-12.png", 10],
+    "K♣": ["Playing-Cards/card-clubs-13.png", 10],
+    "1♦": ["Playing-Cards/card-diamonds-1.png", 11],
+    "2♦": ["Playing-Cards/card-diamonds-2.png", 2],
+    "3♦": ["Playing-Cards/card-diamonds-3.png", 3],
+    "4♦": ["Playing-Cards/card-diamonds-4.png", 4],
+    "5♦": ["Playing-Cards/card-diamonds-5.png", 5],
+    "6♦": ["Playing-Cards/card-diamonds-6.png", 6],
+    "7♦": ["Playing-Cards/card-diamonds-7.png", 7],
+    "8♦": ["Playing-Cards/card-diamonds-8.png", 8],
+    "9♦": ["Playing-Cards/card-diamonds-9.png", 9],
+    "10♦": ["Playing-Cards/card-diamonds-10.png", 10],
+    "J♦": ["Playing-Cards/card-diamonds-11.png", 10],
+    "Q♦": ["Playing-Cards/card-diamonds-12.png", 10],
+    "K♦": ["Playing-Cards/card-diamonds-13.png", 10],
+}
 
 keys = list(deck.keys())
 random.shuffle(keys)
@@ -43,15 +71,12 @@ stay_counter = []
 
 
 class SplashWindow(Screen):
-
     def close(self):
         exit()
 
 
 class GameScreen(Screen):
-
     def deal_cards(self):
-
         # resets board for more than one match
         self.ids.prompt.text = ""
         # clear player cards
@@ -88,7 +113,7 @@ class GameScreen(Screen):
         player.append(deck[keys[1]][1])
 
         # show dealer cards
-        self.ids.dealer_card_down.source = 'Playing-Cards/card-back2.png'
+        self.ids.dealer_card_down.source = "Playing-Cards/card-back2.png"
         self.ids.dealer_card_down.height = "150dp"
         self.ids.dealer_card_down.grow()
         self.ids.dealer_card_two.source = deck[keys[3]][0]
@@ -115,7 +140,6 @@ class GameScreen(Screen):
         self.check_score()
 
     def hit(self):
-
         p_hit_count = len(player) + len(dealer)
 
         if self.ids.card_three.source == "":
@@ -150,7 +174,6 @@ class GameScreen(Screen):
         self.npc()
 
     def npc(self):
-
         dealer_check = sum(dealer)
         d_hit_count = len(player) + len(dealer)
 
@@ -182,39 +205,41 @@ class GameScreen(Screen):
         stay_counter.append(1)
         self.check_score()
 
-    def check_score(self):
-
+    def calculate_player_score(self):
         player_score = sum(player)
-        dealer_score = sum(dealer)
-
-        # Logic for Ace card values
         for values in player:
             if values == 11 and player_score > 21:
                 player.remove(11)
                 player.append(1)
-
                 player_score = sum(player)
+        return player_score
 
+    def calculate_dealer_score(self):
+        dealer_score = sum(dealer)
         for value in dealer:
             if value == 11 and dealer_score > 21:
                 dealer.remove(11)
                 dealer.append(1)
-
                 dealer_score = sum(dealer)
+        return dealer_score
+
+    def determine_winner(self):
+        player_score = self.calculate_player_score()
+        dealer_score = self.calculate_dealer_score()
 
         if len(stay_counter) == 2:
             if player_score == dealer_score:
                 self.ids.prompt.text = "You tied!"
                 self.reset_game()
-            elif player_score > dealer_score and player_score < 21:
+            elif player_score > dealer_score and player_score <= 21:
                 self.ids.prompt.text = "You won!"
                 self.reset_game()
-            elif player_score < dealer_score < 21:
+            elif player_score < dealer_score and dealer_score <= 21:
                 self.ids.prompt.text = "The Dealer won!"
                 self.reset_game()
 
         if player_score == 21 and dealer_score == 21:
-            self.ids.prompt.text = "Its a tie at 21!"
+            self.ids.prompt.text = "It's a tie at 21!"
             self.reset_game()
         elif player_score == 21:
             self.ids.prompt.text = "You won with a 21!"
@@ -229,8 +254,10 @@ class GameScreen(Screen):
             self.ids.prompt.text = "You won. The Dealer busted 21!"
             self.reset_game()
 
-    def reset_game(self):
+    def check_score(self):
+        self.determine_winner()
 
+    def reset_game(self):
         # Show the dealers face down card
         self.ids.dealer_card_down.source = deck[keys[2]][0]
         self.ids.dealer_card_down.height = "150dp"
@@ -265,11 +292,12 @@ Credit for Anna-Maria Bergman
 
 Licensed under the: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
-""")
+"""
+        )
         self.dialog.open()
 
     def donate_button(self):
-        webbrowser.open('https://ko-fi.com/jessecreates', new=2)
+        webbrowser.open("https://ko-fi.com/jessecreates", new=2)
 
     def close_two(self):
         sys.exit(0)
@@ -287,7 +315,7 @@ class BlackJack(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "DeepPurple"
-        return Builder.load_file('layouts.kv')
+        return Builder.load_file("layouts.kv")
 
 
 # on launch start main window class

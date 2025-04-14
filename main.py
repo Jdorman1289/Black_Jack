@@ -76,226 +76,181 @@ class SplashWindow(Screen):
 
 
 class GameScreen(Screen):
+    def _clear_player_cards(self):
+        """Helper to clear all player card widgets."""
+        for card in ["card_one", "card_two", "card_three", "card_four", "card_five", "card_six"]:
+            card_widget = getattr(self.ids, card)
+            card_widget.height = "0dp"
+            card_widget.source = ""
+
+    def _clear_dealer_cards(self):
+        """Helper to clear all dealer card widgets."""
+        for card in ["dealer_card_down", "dealer_card_two", "dealer_card_three", "dealer_card_four", "dealer_card_five", "dealer_card_six"]:
+            card_widget = getattr(self.ids, card)
+            card_widget.height = "0dp"
+            card_widget.source = ""
+
+    def show_tie(self, msg):
+        """Show a tie message and reset the game."""
+        self.ids.prompt.text = msg
+        self.reset_game()
+
+    def show_victory(self, msg=None):
+        """Show a victory dialog and reset the game on confirmation."""
+        from kivymd.uix.button import MDRaisedButton
+        from kivymd.uix.dialog import MDDialog
+        dialog = MDDialog(
+            title="Victory!",
+            text=msg or "Congratulations, you won!",
+            buttons=[
+                MDRaisedButton(
+                    text="OK",
+                    on_release=lambda *a: (dialog.dismiss(), self.reset_game())
+                )
+            ]
+        )
+        dialog.open()
+
+    def show_defeat(self, msg=None):
+        """Show a defeat dialog and reset the game on confirmation."""
+        from kivymd.uix.button import MDRaisedButton
+        from kivymd.uix.dialog import MDDialog
+        dialog = MDDialog(
+            title="Better Luck Next Time",
+            text=msg or "The dealer wins this round.",
+            buttons=[
+                MDRaisedButton(
+                    text="OK",
+                    on_release=lambda *a: (dialog.dismiss(), self.reset_game())
+                )
+            ]
+        )
+        dialog.open()
+
     def deal_cards(self):
-        # resets board for more than one match
+        """Deal initial cards to player and dealer, reset UI for new round."""
         self.ids.prompt.text = ""
-        # clear player cards
-        self.ids.card_one.height = "0dp"
-        self.ids.card_two.height = "0dp"
-        self.ids.card_three.height = "0dp"
-        self.ids.card_four.height = "0dp"
-        self.ids.card_five.height = "0dp"
-        self.ids.card_six.height = "0dp"
-        self.ids.card_one.source = ""
-        self.ids.card_two.source = ""
-        self.ids.card_three.source = ""
-        self.ids.card_four.source = ""
-        self.ids.card_five.source = ""
-        self.ids.card_six.source = ""
-
-        # clear dealers cards
-        self.ids.dealer_card_down.source = ""
-        self.ids.dealer_card_down.height = "0dp"
-        self.ids.dealer_card_two.height = "0dp"
-        self.ids.dealer_card_two.source = ""
-        self.ids.dealer_card_three.height = "0dp"
-        self.ids.dealer_card_three.source = ""
-        self.ids.dealer_card_four.height = "0dp"
-        self.ids.dealer_card_four.source = ""
-        self.ids.dealer_card_five.height = "0dp"
-        self.ids.dealer_card_five.source = ""
-        self.ids.dealer_card_six.height = "0dp"
-        self.ids.dealer_card_six.source = ""
-
-        # players hand
-
-        player.append(deck[keys[0]][1])
-        player.append(deck[keys[1]][1])
-
-        # show dealer cards
+        self._clear_player_cards()
+        self._clear_dealer_cards()
+        # Player hand
+        self.player = [deck[keys[0]][1], deck[keys[1]][1]]
+        # Dealer hand
+        self.dealer = [deck[keys[2]][1], deck[keys[3]][1]]
+        # Show dealer cards
         self.ids.dealer_card_down.source = "Playing-Cards/card-back2.png"
         self.ids.dealer_card_down.height = "150dp"
         self.ids.dealer_card_down.grow()
         self.ids.dealer_card_two.source = deck[keys[3]][0]
         self.ids.dealer_card_two.height = "150dp"
         self.ids.dealer_card_two.grow()
-
-        # show players cards
+        # Show player cards
         self.ids.card_one.source = deck[keys[0]][0]
         self.ids.card_two.source = deck[keys[1]][0]
         self.ids.card_one.height = "150dp"
         self.ids.card_one.grow()
         self.ids.card_two.height = "150dp"
         self.ids.card_two.grow()
-
-        # dealers hand
-
-        dealer.append(deck[keys[2]][1])
-        dealer.append(deck[keys[3]][1])
-
         self.ids.deal_button.disabled = True
         self.ids.hit_button.disabled = False
         self.ids.stay_button.disabled = False
-
+        self.stay_counter = []
         self.check_score()
 
     def hit(self):
-        p_hit_count = len(player) + len(dealer)
-
-        if self.ids.card_three.source == "":
-            self.ids.card_three.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_three.height = "150dp"
-            self.ids.card_three.shake()
-            player.append(deck[keys[p_hit_count + 1]][1])
-        elif self.ids.card_four.source == "":
-            self.ids.card_four.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_four.height = "150dp"
-            self.ids.card_four.shake()
-            player.append(deck[keys[p_hit_count + 1]][1])
-        elif self.ids.card_five.source == "":
-            self.ids.card_five.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_five.height = "150dp"
-            self.ids.card_five.shake()
-            player.append(deck[keys[p_hit_count + 1]][1])
-        elif self.ids.card_six.source == "":
-            self.ids.card_six.source = deck[keys[p_hit_count + 1]][0]
-            self.ids.card_six.height = "150dp"
-            self.ids.card_six.shake()
-            player.append(deck[keys[p_hit_count + 1]][1])
+        """Deal an additional card to the player if possible."""
+        p_hit_count = len(self.player) + len(self.dealer)
+        card_slots = ["card_three", "card_four", "card_five", "card_six"]
+        for idx, slot in enumerate(card_slots):
+            card_widget = getattr(self.ids, slot)
+            if card_widget.source == "":
+                card_widget.source = deck[keys[p_hit_count + idx + 1]][0]
+                card_widget.height = "150dp"
+                card_widget.shake()
+                self.player.append(deck[keys[p_hit_count + idx + 1]][1])
+                break
         else:
             self.ids.hit_button.disabled = False
             self.ids.prompt.text = "You can't draw more than 6 cards!"
-
         self.check_score()
 
     def stay(self):
-        stay_counter.append(1)
+        """Player chooses to stay. Dealer's turn."""
+        self.stay_counter.append(1)
         self.check_score()
         self.npc()
 
     def npc(self):
-        dealer_check = sum(dealer)
-        d_hit_count = len(player) + len(dealer)
-
+        """Dealer draws cards according to standard rules."""
+        dealer_check = sum(self.dealer)
+        d_hit_count = len(self.player) + len(self.dealer)
+        dealer_slots = ["dealer_card_three", "dealer_card_four", "dealer_card_five", "dealer_card_six"]
+        slot_offset = 1
         while dealer_check != 21 and dealer_check < 17:
-            if self.ids.dealer_card_three.source == "":
-                self.ids.dealer_card_three.source = deck[keys[d_hit_count + 1]][0]
-                self.ids.dealer_card_three.height = "150dp"
-                self.ids.dealer_card_three.grow()
-                dealer.append(deck[keys[d_hit_count + 1]][1])
-            elif self.ids.dealer_card_four.source == "":
-                self.ids.dealer_card_four.source = deck[keys[d_hit_count + 2]][0]
-                self.ids.dealer_card_four.height = "150dp"
-                self.ids.dealer_card_four.grow()
-                dealer.append(deck[keys[d_hit_count + 2]][1])
-            elif self.ids.dealer_card_five.source == "":
-                self.ids.dealer_card_five.source = deck[keys[d_hit_count + 3]][0]
-                self.ids.dealer_card_five.height = "150dp"
-                self.ids.dealer_card_five.grow()
-                dealer.append(deck[keys[d_hit_count + 3]][1])
-            elif self.ids.dealer_card_six.source == "":
-                self.ids.dealer_card_six.source = deck[keys[d_hit_count + 4]][0]
-                self.ids.dealer_card_six.height = "150dp"
-                self.ids.dealer_card_six.grow()
-                dealer.append(deck[keys[d_hit_count + 4]][1])
+            for idx, slot in enumerate(dealer_slots):
+                card_widget = getattr(self.ids, slot)
+                if card_widget.source == "":
+                    card_widget.source = deck[keys[d_hit_count + idx + slot_offset]][0]
+                    card_widget.height = "150dp"
+                    card_widget.grow()
+                    self.dealer.append(deck[keys[d_hit_count + idx + slot_offset]][1])
+                    break
             else:
                 break
-
-            dealer_check = sum(dealer)
-        stay_counter.append(1)
+            dealer_check = sum(self.dealer)
+        self.stay_counter.append(1)
         self.check_score()
 
     def calculate_player_score(self):
-        player_score = sum(player)
-        for values in player:
-            if values == 11 and player_score > 21:
-                player.remove(11)
-                player.append(1)
-                player_score = sum(player)
+        """Calculate the player's score, handling Aces as 1 or 11."""
+        player_score = sum(self.player)
+        while 11 in self.player and player_score > 21:
+            self.player[self.player.index(11)] = 1
+            player_score = sum(self.player)
         return player_score
 
     def calculate_dealer_score(self):
-        dealer_score = sum(dealer)
-        for value in dealer:
-            if value == 11 and dealer_score > 21:
-                dealer.remove(11)
-                dealer.append(1)
-                dealer_score = sum(dealer)
+        """Calculate the dealer's score, handling Aces as 1 or 11."""
+        dealer_score = sum(self.dealer)
+        while 11 in self.dealer and dealer_score > 21:
+            self.dealer[self.dealer.index(11)] = 1
+            dealer_score = sum(self.dealer)
         return dealer_score
 
     def determine_winner(self):
+        """Determine and display the winner based on current scores."""
         player_score = self.calculate_player_score()
         dealer_score = self.calculate_dealer_score()
-
-        def show_tie(msg):
-            self.ids.prompt.text = msg
-            # Optionally, you could create a tie dialog in the future
-            self.reset_game()
-
-        from kivymd.uix.button import MDRaisedButton
-        from kivymd.uix.dialog import MDDialog
-
-        def show_victory(msg=None):
-            dialog = MDDialog(
-                title="Victory!",
-                text=msg or "Congratulations, you won!",
-                buttons=[
-                    MDRaisedButton(
-                        text="OK",
-                        on_release=lambda *a: (dialog.dismiss(), self.reset_game())
-                    )
-                ]
-            )
-            dialog.open()
-
-        def show_defeat(msg=None):
-            dialog = MDDialog(
-                title="Better Luck Next Time",
-                text=msg or "The dealer wins this round.",
-                buttons=[
-                    MDRaisedButton(
-                        text="OK",
-                        on_release=lambda *a: (dialog.dismiss(), self.reset_game())
-                    )
-                ]
-            )
-            dialog.open()
-
-
-        if len(stay_counter) == 2:
+        if len(self.stay_counter) == 2:
             if player_score == dealer_score:
-                show_tie("You tied!")
+                self.show_tie("You tied!")
             elif player_score > dealer_score and player_score <= 21:
-                show_victory("You won!")
+                self.show_victory("You won!")
             elif player_score < dealer_score and dealer_score <= 21:
-                show_defeat("The Dealer won!")
-
+                self.show_defeat("The Dealer won!")
         if player_score == 21 and dealer_score == 21:
-            show_tie("It's a tie at 21!")
+            self.show_tie("It's a tie at 21!")
         elif player_score == 21:
-            show_victory("You won with a 21!")
+            self.show_victory("You won with a 21!")
         elif dealer_score == 21:
-            show_defeat("The Dealer won with 21!")
+            self.show_defeat("The Dealer won with 21!")
         elif player_score > 21 and dealer_score < 21:
-            show_defeat("You busted 21. The Dealer wins!")
+            self.show_defeat("You busted 21. The Dealer wins!")
         elif player_score < 21 and dealer_score > 21:
-            show_victory("You won. The Dealer busted 21!")
+            self.show_victory("You won. The Dealer busted 21!")
 
 
     def check_score(self):
+        """Check and display the winner if conditions are met."""
         self.determine_winner()
 
     def reset_game(self):
-        # Show the dealers face down card
+        """Reset the game state and UI for a new round."""
         self.ids.dealer_card_down.source = deck[keys[2]][0]
         self.ids.dealer_card_down.height = "150dp"
-
-        player.clear()
-        dealer.clear()
-        stay_counter.clear()
-
+        self.player = []
+        self.dealer = []
+        self.stay_counter = []
         random.shuffle(keys)
-
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True

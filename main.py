@@ -2,6 +2,7 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.dialog import MDDialog
+from kivy.core.audio import SoundLoader
 import webbrowser
 import random
 import sys
@@ -76,6 +77,30 @@ class SplashWindow(Screen):
 
 
 class GameScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.sound_card = SoundLoader.load('sounds/card.wav')
+        self.sound_win = SoundLoader.load('sounds/win.wav')
+        self.sound_lose = SoundLoader.load('sounds/lose.wav')
+        self.sound_click = SoundLoader.load('sounds/click.wav')
+
+    def play_sound(self, sound):
+        if sound:
+            sound.stop()
+            sound.play()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.sound_card = SoundLoader.load('sounds/card.wav')
+        self.sound_win = SoundLoader.load('sounds/win.wav')
+        self.sound_lose = SoundLoader.load('sounds/lose.wav')
+        self.sound_click = SoundLoader.load('sounds/click.wav')
+
+    def play_sound(self, sound):
+        if sound and sound.state != 'play':
+            sound.stop()  # Ensure sound is not overlapping
+            sound.play()
+
     def _clear_player_cards(self):
         """Helper to clear all player card widgets."""
         for card in ["card_one", "card_two", "card_three", "card_four", "card_five", "card_six"]:
@@ -97,6 +122,7 @@ class GameScreen(Screen):
 
     def show_victory(self, msg=None):
         """Show a victory dialog and reset the game on confirmation."""
+        self.play_sound(self.sound_win)
         from kivymd.uix.button import MDRaisedButton
         from kivymd.uix.dialog import MDDialog
         dialog = MDDialog(
@@ -113,6 +139,7 @@ class GameScreen(Screen):
 
     def show_defeat(self, msg=None):
         """Show a defeat dialog and reset the game on confirmation."""
+        self.play_sound(self.sound_lose)
         from kivymd.uix.button import MDRaisedButton
         from kivymd.uix.dialog import MDDialog
         dialog = MDDialog(
@@ -129,6 +156,7 @@ class GameScreen(Screen):
 
     def deal_cards(self):
         """Deal initial cards to player and dealer, reset UI for new round."""
+        self.play_sound(self.sound_card)
         self.ids.prompt.text = ""
         self._clear_player_cards()
         self._clear_dealer_cards()
@@ -158,6 +186,7 @@ class GameScreen(Screen):
 
     def hit(self):
         """Deal an additional card to the player if possible."""
+        self.play_sound(self.sound_card)
         p_hit_count = len(self.player) + len(self.dealer)
         card_slots = ["card_three", "card_four", "card_five", "card_six"]
         for idx, slot in enumerate(card_slots):
@@ -245,6 +274,7 @@ class GameScreen(Screen):
 
     def reset_game(self):
         """Reset the game state and UI for a new round."""
+        self.play_sound(self.sound_click)
         self.ids.dealer_card_down.source = deck[keys[2]][0]
         self.ids.dealer_card_down.height = "150dp"
         self.player = []

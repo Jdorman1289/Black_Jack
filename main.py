@@ -227,32 +227,60 @@ class GameScreen(Screen):
         player_score = self.calculate_player_score()
         dealer_score = self.calculate_dealer_score()
 
+        def show_tie(msg):
+            self.ids.prompt.text = msg
+            # Optionally, you could create a tie dialog in the future
+            self.reset_game()
+
+        from kivymd.uix.button import MDRaisedButton
+        from kivymd.uix.dialog import MDDialog
+
+        def show_victory(msg=None):
+            dialog = MDDialog(
+                title="Victory!",
+                text=msg or "Congratulations, you won!",
+                buttons=[
+                    MDRaisedButton(
+                        text="OK",
+                        on_release=lambda *a: (dialog.dismiss(), self.reset_game())
+                    )
+                ]
+            )
+            dialog.open()
+
+        def show_defeat(msg=None):
+            dialog = MDDialog(
+                title="Better Luck Next Time",
+                text=msg or "The dealer wins this round.",
+                buttons=[
+                    MDRaisedButton(
+                        text="OK",
+                        on_release=lambda *a: (dialog.dismiss(), self.reset_game())
+                    )
+                ]
+            )
+            dialog.open()
+
+
         if len(stay_counter) == 2:
             if player_score == dealer_score:
-                self.ids.prompt.text = "You tied!"
-                self.reset_game()
+                show_tie("You tied!")
             elif player_score > dealer_score and player_score <= 21:
-                self.ids.prompt.text = "You won!"
-                self.reset_game()
+                show_victory("You won!")
             elif player_score < dealer_score and dealer_score <= 21:
-                self.ids.prompt.text = "The Dealer won!"
-                self.reset_game()
+                show_defeat("The Dealer won!")
 
         if player_score == 21 and dealer_score == 21:
-            self.ids.prompt.text = "It's a tie at 21!"
-            self.reset_game()
+            show_tie("It's a tie at 21!")
         elif player_score == 21:
-            self.ids.prompt.text = "You won with a 21!"
-            self.reset_game()
+            show_victory("You won with a 21!")
         elif dealer_score == 21:
-            self.ids.prompt.text = "The Dealer won with 21!"
-            self.reset_game()
+            show_defeat("The Dealer won with 21!")
         elif player_score > 21 and dealer_score < 21:
-            self.ids.prompt.text = "You busted 21. The Dealer wins!"
-            self.reset_game()
+            show_defeat("You busted 21. The Dealer wins!")
         elif player_score < 21 and dealer_score > 21:
-            self.ids.prompt.text = "You won. The Dealer busted 21!"
-            self.reset_game()
+            show_victory("You won. The Dealer busted 21!")
+
 
     def check_score(self):
         self.determine_winner()

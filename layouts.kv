@@ -60,6 +60,8 @@ WindowManager:
 
 <GameScreen>
     name: "game_screen"
+
+
     
     MDBoxLayout:
         orientation: "vertical"
@@ -238,6 +240,7 @@ WindowManager:
                 size_hint_y: None
                 text_size: self.width, None
                 height: self.texture_size[1]
+                opacity: 0  # Hide prompt label, popups will be used instead
     
     MDNavigationDrawer:
         id: nav_drawer

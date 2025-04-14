@@ -82,133 +82,126 @@ WindowManager:
 
 
 
-        ScrollView:
-            do_scroll_y: False
-
-            MDBoxLayout:
-                orientation: "horizontal"
-                size_hint_x: None
-                width: self.minimum_width
-                size_hint_y: None
-                height: self.minimum_height
-           
-                MImage:
-                    id: dealer_card_down
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    magic_speed: 1
-                    height: '0dp'
-                    source: ""
-
-                MImage:
-                    id: dealer_card_two
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
-
-                MImage:
-                    id: dealer_card_three
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
-                MImage:
-                    id: dealer_card_four
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
-                MImage:
-                    id: dealer_card_five
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
-                MImage:
-                    id: dealer_card_six
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
-
-
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_x: 0.95
+            pos_hint: {"center_x": 0.5}
+            spacing: -60  # Negative spacing for overlap
+            height: self.minimum_height
             
-        ScrollView:
-            do_scroll_y: False
+            MImage:
+                id: dealer_card_down
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                magic_speed: 1
+                height: '0dp'
+                source: ""
 
-            MDBoxLayout:
-                orientation: "horizontal"
-                size_hint_x: None
-                width: self.minimum_width
-                size_hint_y: None
-                height: self.minimum_height
-                
-                MImage:
-                    id: card_one
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
+            MImage:
+                id: dealer_card_two
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
 
-                MImage:
-                    id: card_two
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
+            MImage:
+                id: dealer_card_three
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
+            MImage:
+                id: dealer_card_four
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
+            MImage:
+                id: dealer_card_five
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
+            MImage:
+                id: dealer_card_six
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
 
-                MImage:
-                    id: card_three
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
 
-                MImage:
-                    id: card_four
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_x: 0.95
+            pos_hint: {"center_x": 0.5}
+            spacing: -60  # Negative spacing for overlap
+            height: self.minimum_height
+            
+            MImage:
+                id: card_one
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
 
-                MImage:
-                    id: card_five
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
+            MImage:
+                id: card_two
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
 
-                MImage:
-                    id: card_six
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    width: 280
-                    height: '0dp'
-                    source: ""
+            MImage:
+                id: card_three
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
+
+            MImage:
+                id: card_four
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
+
+            MImage:
+                id: card_five
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
+
+            MImage:
+                id: card_six
+                allow_stretch: True
+                keep_ratio: True
+                size_hint: None, None
+                width: 100
+                height: '0dp'
+                source: ""
         
         MDBoxLayout:
             orientation: "horizontal"

@@ -205,7 +205,6 @@ class GameScreen(Screen):
         """Show a victory dialog and reset the game on confirmation."""
         self.play_sound(self.sound_win)
         from kivymd.uix.button import MDRaisedButton
-        from kivymd.uix.dialog import MDDialog
         dialog = MDDialog(
             title="Victory!",
             text=msg or "Congratulations, you won!",
@@ -222,7 +221,6 @@ class GameScreen(Screen):
         """Show a defeat dialog and reset the game on confirmation."""
         self.play_sound(self.sound_lose)
         from kivymd.uix.button import MDRaisedButton
-        from kivymd.uix.dialog import MDDialog
         dialog = MDDialog(
             title="Better Luck Next Time",
             text=msg or "The dealer wins this round.",
@@ -371,26 +369,9 @@ class GameScreen(Screen):
     # functions for nav bar items
 
     def show_about(self):
-        self.dialog = MDDialog(
-            text="""
-Black Jack app   
-A simple card game    
-
-The cards were found here: https://cazwolf.itch.io/pixel-fantasy-cards 
-
-Credit for Caz/Caz Wolf Card Pack
-
-
-Splash Screen Image from: https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2238731
-
-Credit for Anna-Maria Bergman
-
-
-Licensed under the: GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
-
-"""
-        )
-        self.dialog.open()
+        import webbrowser
+        # Open the project's GitHub page
+        webbrowser.open('https://github.com/Jdorman1289/Black_Jack')
 
     def donate_button(self):
         webbrowser.open("https://ko-fi.com/jessecreates", new=2)

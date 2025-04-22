@@ -3,9 +3,12 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.dialog import MDDialog
 from kivy.core.audio import SoundLoader
+from kivy.logger import Logger
 import webbrowser
 import random
 import sys
+import traceback
+import os
 
 deck = {
     "1♠": ["Playing-Cards/card-spades-1.png", 11],
@@ -78,28 +81,75 @@ class SplashWindow(Screen):
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.sound_card = SoundLoader.load('sounds/card.wav')
-        self.sound_win = SoundLoader.load('sounds/win.wav')
-        self.sound_lose = SoundLoader.load('sounds/lose.wav')
-        self.sound_click = SoundLoader.load('sounds/click.wav')
+        try:
+            Logger.info('GameScreen: Initializing')
+            super().__init__(**kwargs)
+            
+            # Check if we're on Linux - handle sound differently
+            self.use_sound = sys.platform != 'linux'
+            Logger.info(f'GameScreen: Sound enabled: {self.use_sound}')
+            
+            # Initialize sound properties whether we load them or not
+            self.sound_card = None
+            self.sound_win = None
+            self.sound_lose = None
+            self.sound_click = None
+            
+            # Only attempt to load sounds if enabled
+            if self.use_sound:
+                Logger.info('GameScreen: Loading sound files')
+                try:
+                    self.sound_card = self.load_sound('sounds/card.wav')
+                    self.sound_win = self.load_sound('sounds/win.wav')
+                    self.sound_lose = self.load_sound('sounds/lose.wav')
+                    self.sound_click = self.load_sound('sounds/click.wav')
+                    Logger.info('GameScreen: Sound loading complete')
+                except Exception as e:
+                    Logger.error(f'GameScreen: Error loading sounds: {str(e)}')
+                    self.use_sound = False
+                    
+            Logger.info('GameScreen: Initialization complete')
+        except Exception as e:
+            Logger.error(f'GameScreen: Error in __init__: {str(e)}')
+            traceback.print_exc()
+    
+    def load_sound(self, sound_path):
+        try:
+            Logger.info(f'GameScreen: Loading sound: {sound_path}')
+            if not os.path.exists(sound_path):
+                Logger.warning(f'GameScreen: Sound file not found: {sound_path}')
+                return None
+            sound = SoundLoader.load(sound_path)
+            if sound:
+                Logger.info(f'GameScreen: Sound loaded successfully: {sound_path}')
+            else:
+                Logger.warning(f'GameScreen: Failed to load sound: {sound_path}')
+            return sound
+        except Exception as e:
+            Logger.error(f'GameScreen: Error loading sound {sound_path}: {str(e)}')
+            return None
 
     def play_sound(self, sound):
-        if sound:
-            sound.stop()
-            sound.play()
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.sound_card = SoundLoader.load('sounds/card.wav')
-        self.sound_win = SoundLoader.load('sounds/win.wav')
-        self.sound_lose = SoundLoader.load('sounds/lose.wav')
-        self.sound_click = SoundLoader.load('sounds/click.wav')
-
-    def play_sound(self, sound):
-        if sound and sound.state != 'play':
-            sound.stop()  # Ensure sound is not overlapping
-            sound.play()
+        # Skip sound playback if disabled (on Linux)
+        if not hasattr(self, 'use_sound') or not self.use_sound:
+            return
+            
+        try:
+            if sound and hasattr(sound, 'state'):
+                if sound.state != 'play':
+                    sound.stop()  # Ensure sound is not overlapping
+                    sound.play()
+            elif sound:
+                # For some sound systems that might not have state attribute
+                try:
+                    sound.stop()
+                except Exception:
+                    pass
+                sound.play()
+        except Exception as e:
+            Logger.error(f'GameScreen: Error playing sound: {str(e)}')
+            # Disable sound if we encounter errors during playback
+            self.use_sound = False
 
     def _clear_player_cards(self):
         """Helper to clear all player card widgets."""
@@ -326,9 +376,38 @@ class WindowManager(ScreenManager):
 
 class BlackJack(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "DeepPurple"
-        return Builder.load_file("layouts.kv")
+        try:
+            Logger.info('BlackJack: Initializing app')
+            Logger.info(f'BlackJack: Running on platform: {sys.platform}')
+            Logger.info(f'BlackJack: Current directory: {os.getcwd()}')
+            
+            # Set theme properties
+            Logger.info('BlackJack: Setting theme properties')
+            self.theme_cls.theme_style = "Dark"
+            self.theme_cls.primary_palette = "DeepPurple"
+            
+            # Load KV file with error handling
+            kv_file = "layouts.kv"
+            Logger.info(f'BlackJack: Attempting to load KV file: {kv_file}')
+            if not os.path.exists(kv_file):
+                Logger.error(f'BlackJack: KV file not found: {kv_file}')
+                return None
+                
+            # Try to load the KV file
+            try:
+                Logger.info('BlackJack: Loading KV file')
+                root = Builder.load_file(kv_file)
+                Logger.info('BlackJack: KV file loaded successfully')
+                return root
+            except Exception as e:
+                Logger.error(f'BlackJack: Error loading KV file: {str(e)}')
+                traceback.print_exc()
+                return None
+                
+        except Exception as e:
+            Logger.error(f'BlackJack: Unhandled exception in build: {str(e)}')
+            traceback.print_exc()
+            return None
 
 
 # on launch start main window class

@@ -2,13 +2,89 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.dialog import MDDialog
-from kivy.core.audio import SoundLoader
 from kivy.logger import Logger
 import webbrowser
 import random
 import sys
 import traceback
 import os
+import pygame  # For better cross-platform audio support
+from threading import Thread
+
+# Robust cross-platform sound player using PyGame
+class PygameSoundPlayer:
+    def __init__(self):
+        Logger.info('PygameSoundPlayer: Initializing PyGame mixer')
+        # Initialize PyGame mixer in a way that minimizes startup delay
+        self._initialize_mixer()
+        self.sounds = {}
+        self.initialized = False
+    
+    def _initialize_mixer(self):
+        # Start PyGame mixer initialization in a separate thread to avoid blocking
+        Thread(target=self._init_thread, daemon=True).start()
+    
+    def _init_thread(self):
+        try:
+            # Low buffer size and frequency for faster startup
+            pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=512)
+            pygame.mixer.set_num_channels(16)  # More channels for overlapping sounds
+            Logger.info('PygameSoundPlayer: PyGame mixer initialized successfully')
+            self.initialized = True
+        except Exception as e:
+            Logger.error(f'PygameSoundPlayer: Failed to initialize mixer: {e}')
+            
+    def load(self, sound_id, path):
+        """Load a sound file and associate it with an ID"""
+        try:
+            if not os.path.exists(path):
+                Logger.warning(f'PygameSoundPlayer: Sound file not found: {path}')
+                return None
+                
+            # Add the sound to our dictionary but wait to load it until the mixer is ready
+            self.sounds[sound_id] = {'path': path, 'sound': None, 'loaded': False}
+            Logger.info(f'PygameSoundPlayer: Sound registered: {sound_id} - {path}')
+            
+            # Try to load immediately if mixer is ready
+            if self.initialized:
+                self._load_sound(sound_id)
+            return sound_id
+        except Exception as e:
+            Logger.error(f'PygameSoundPlayer: Error registering sound {path}: {e}')
+            return None
+    
+    def _load_sound(self, sound_id):
+        """Actually load the sound using PyGame mixer"""
+        try:
+            if sound_id not in self.sounds:
+                return
+                
+            sound_info = self.sounds[sound_id]
+            if sound_info['loaded']:
+                return  # Already loaded
+                
+            sound_info['sound'] = pygame.mixer.Sound(sound_info['path'])
+            sound_info['loaded'] = True
+            Logger.info(f'PygameSoundPlayer: Sound loaded: {sound_id}')
+        except Exception as e:
+            Logger.error(f'PygameSoundPlayer: Error loading sound {sound_id}: {e}')
+    
+    def play(self, sound_id):
+        """Play a previously loaded sound by its ID"""
+        try:
+            # If mixer isn't ready yet, just return silently
+            if not self.initialized:
+                return
+                
+            # If this sound hasn't been loaded yet, load it now
+            if sound_id in self.sounds and not self.sounds[sound_id]['loaded']:
+                self._load_sound(sound_id)
+                
+            # Play the sound if it's available
+            if sound_id in self.sounds and self.sounds[sound_id]['loaded']:
+                self.sounds[sound_id]['sound'].play()
+        except Exception as e:
+            Logger.error(f'PygameSoundPlayer: Error playing sound {sound_id}: {e}')
 
 deck = {
     "1♠": ["Playing-Cards/card-spades-1.png", 11],
@@ -85,71 +161,26 @@ class GameScreen(Screen):
             Logger.info('GameScreen: Initializing')
             super().__init__(**kwargs)
             
-            # Check if we're on Linux - handle sound differently
-            self.use_sound = sys.platform != 'linux'
-            Logger.info(f'GameScreen: Sound enabled: {self.use_sound}')
+            # Create PyGame-based sound player for cross-platform compatibility
+            self.sound_player = PygameSoundPlayer()
             
-            # Initialize sound properties whether we load them or not
-            self.sound_card = None
-            self.sound_win = None
-            self.sound_lose = None
-            self.sound_click = None
+            # Initialize sound properties with string IDs that map to the actual sound files
+            Logger.info('GameScreen: Loading sounds')
+            # Now our sound handling uses IDs rather than direct sound objects
+            self.sound_card = self.sound_player.load('card', 'sounds/card.wav')
+            self.sound_win = self.sound_player.load('win', 'sounds/win.wav')
+            self.sound_lose = self.sound_player.load('lose', 'sounds/lose.wav')
+            self.sound_click = self.sound_player.load('click', 'sounds/click.wav')
             
-            # Only attempt to load sounds if enabled
-            if self.use_sound:
-                Logger.info('GameScreen: Loading sound files')
-                try:
-                    self.sound_card = self.load_sound('sounds/card.wav')
-                    self.sound_win = self.load_sound('sounds/win.wav')
-                    self.sound_lose = self.load_sound('sounds/lose.wav')
-                    self.sound_click = self.load_sound('sounds/click.wav')
-                    Logger.info('GameScreen: Sound loading complete')
-                except Exception as e:
-                    Logger.error(f'GameScreen: Error loading sounds: {str(e)}')
-                    self.use_sound = False
-                    
             Logger.info('GameScreen: Initialization complete')
         except Exception as e:
             Logger.error(f'GameScreen: Error in __init__: {str(e)}')
             traceback.print_exc()
     
-    def load_sound(self, sound_path):
-        try:
-            Logger.info(f'GameScreen: Loading sound: {sound_path}')
-            if not os.path.exists(sound_path):
-                Logger.warning(f'GameScreen: Sound file not found: {sound_path}')
-                return None
-            sound = SoundLoader.load(sound_path)
-            if sound:
-                Logger.info(f'GameScreen: Sound loaded successfully: {sound_path}')
-            else:
-                Logger.warning(f'GameScreen: Failed to load sound: {sound_path}')
-            return sound
-        except Exception as e:
-            Logger.error(f'GameScreen: Error loading sound {sound_path}: {str(e)}')
-            return None
-
-    def play_sound(self, sound):
-        # Skip sound playback if disabled (on Linux)
-        if not hasattr(self, 'use_sound') or not self.use_sound:
-            return
-            
-        try:
-            if sound and hasattr(sound, 'state'):
-                if sound.state != 'play':
-                    sound.stop()  # Ensure sound is not overlapping
-                    sound.play()
-            elif sound:
-                # For some sound systems that might not have state attribute
-                try:
-                    sound.stop()
-                except Exception:
-                    pass
-                sound.play()
-        except Exception as e:
-            Logger.error(f'GameScreen: Error playing sound: {str(e)}')
-            # Disable sound if we encounter errors during playback
-            self.use_sound = False
+    def play_sound(self, sound_id):
+        """Play a sound using the cross-platform PyGame sound player"""
+        if sound_id:
+            self.sound_player.play(sound_id)
 
     def _clear_player_cards(self):
         """Helper to clear all player card widgets."""
@@ -324,6 +355,7 @@ class GameScreen(Screen):
 
     def reset_game(self):
         """Reset the game state and UI for a new round."""
+        Logger.info('GameScreen: Resetting game')
         self.play_sound(self.sound_click)
         self.ids.dealer_card_down.source = deck[keys[2]][0]
         self.ids.dealer_card_down.height = "150dp"
@@ -334,6 +366,7 @@ class GameScreen(Screen):
         self.ids.deal_button.disabled = False
         self.ids.hit_button.disabled = True
         self.ids.stay_button.disabled = True
+        Logger.info('GameScreen: Game reset complete')
 
     # functions for nav bar items
 
